@@ -30,19 +30,18 @@ class Game:
 
     def player1(self, selection):
         player1.playcard1(selection)
-        score = score_points(game.cardsplayed)
+        score = score_points()
         score.basic(player1, player2, selection)
 
     def player2(self, selection):
         player2.playcard2(selection)
-        score = score_points(game.cardsplayed)
+        score = score_points()
         score.basic(player2, player1, selection)
 
 class score_points:
-    def __init__(self, cardsplayed):
-        self.currentcards = []
-        self.allcards = cardsplayed
-
+    game = Game()
+    currentcards = []
+    allcards = game.cardsplayed
     def basic(self, player, otherplayer, selection):
         value = Deck.numbers.index(selection.num)+1
         if value > 10:
@@ -121,7 +120,6 @@ class score_points:
                 return len(list) - j + 1
                 break
 game = Game()
-
 # if __name__ == '__main__':
 #     player1hand()
 #     player2hand()
