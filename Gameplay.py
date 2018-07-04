@@ -42,6 +42,7 @@ class score_points:
     game = Game()
     currentcards = []
     allcards = game.cardsplayed
+    game.cardsplayed = []
     def basic(self, player, otherplayer, selection):
         value = Deck.numbers.index(selection.num)+1
         if value > 10:

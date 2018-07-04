@@ -78,7 +78,7 @@ def index():
             point.get_var1(), point.get_var2(),
             addscore.get_var1(), addscore.get_var2(),
             player1.pointsearned, player2.pointsearned,
-            score.allcards)  # building main template
+            game.cardsplayed)  # building main template
     print(addscore.get_var1(), addscore.get_var2())
     if full.turn == 'player1':
         if addscore.get_var1() >= 121:
