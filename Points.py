@@ -4,12 +4,14 @@ import itertools
 Deck = Deck()
 Hand = Hands()
 
+
 class Point_Counter:
     def __init__(self):
         self.handnums = []
         self.handrealnums = []
         self.handsuits = []
         self.y = 0
+
     def calculation(self, Choice, Extra):
         self.choice = Choice+Extra
         self.p1points = 0
@@ -37,13 +39,10 @@ class Point_Counter:
         elif self.y == 16:
             self.p1points += 12
         self.y = 0
-
-
         for i in range(2, 6):
             for subset in itertools.combinations(self.handnums, i):
                 if sum(subset) == 15:
                     self.p1points += 2
-
 
         if self.handsuits.count(self.choice[0].suit) == 4 and self.handsuits.count(self.choice[4].suit) != 4:
             self.p1points += 4
@@ -52,12 +51,11 @@ class Point_Counter:
         else:
              pass
 
-
         self.ll = []
         for i in sorted(self.handrealnums):
             if i+1 in sorted(self.handrealnums) or (i-1 in sorted(self.handrealnums)):
                 self.ll.append(i)
-        if len(self.ll) >= 2 and self.ll[len(self.ll) - 1] - self.ll[0] > 1 and self.ll[len(self.ll) - 1] - self.ll[0] < len(self.ll):
+        if len(self.ll) >= 2 and self.ll[-1] - self.ll[0] > 1 and self.ll[-1] - self.ll[0] < len(self.ll):
             self.p1points += (len(set(self.ll)) * (len(self.ll) - len(set(self.ll)) + 1))
 
         self.newnums = []
@@ -117,8 +115,8 @@ class Point_Counter:
         for i in sorted(self.handrealnums):
             if i+1 in sorted(self.handrealnums) or (i-1 in sorted(self.handrealnums)):
                 self.ll.append(i)
-        if len(self.ll) >= 2 and self.ll[len(self.ll) - 1] - self.ll[0] > 1 and self.ll[len(self.ll) - 1] - self.ll[0] < len(self.ll):
-            self.p2points += (len(set(self.ll)) * (len(self.ll) - len(set(self.ll)) + 1))
+        if len(self.ll) >= 2 and self.ll[-1] - self.ll[0] > 1 and self.ll[-1] - self.ll[0] < len(self.ll):
+            self.p2points += (len(set(self.ll)) * len(self.ll - len(set(self.ll)) + 1))
         self.newnums = []
         for i in Choice:
             self.newnums.append(i)
