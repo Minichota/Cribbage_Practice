@@ -1,0 +1,27 @@
+<html>
+    It is currently {}'s turn<br><br>
+    The Extra card is<br>
+    <img src="{{url_for('static', filename=extra)}}", width="50" /><br>
+        <div>
+                Player ones hand is:<br>
+                <img src="{{url_for('static', filename=image_name)}}", width="50", onclick="full.Play()" />
+                <img src="{{url_for('static', filename=image_name2)}}", width="50" />
+                <img src="{{url_for('static', filename=image_name3)}}", width="50" />
+                <img src="{{url_for('static', filename=image_name4)}}", width="50" />
+                This is worth: {} points<br>
+        </div>
+        <div>
+            Player twos hand is:<br>
+            <img src="{{url_for('static', filename=image_name5)}}", width="50" />
+            <img src="{{url_for('static', filename=image_name6)}}", width="50" />
+            <img src="{{url_for('static', filename=image_name7)}}", width="50" />
+            <img src="{{url_for('static', filename=image_name8)}}", width="50" />
+            This is worth: {} points
+        </div>
+            <p>The new score is {} to {}</p>
+        <form method="post" action="/">
+            <input type="submit" value="Next turn" name="Next turn" style="height:50px; width:200px"/>
+        </form>
+    <p align="right">Through an automatically played hand
+        <br>Player one scored {} points and Player two scored {} points</p>
+</html>
