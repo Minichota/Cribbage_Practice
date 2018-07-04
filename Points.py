@@ -116,7 +116,7 @@ class Point_Counter:
             if i+1 in sorted(self.handrealnums) or (i-1 in sorted(self.handrealnums)):
                 self.ll.append(i)
         if len(self.ll) >= 2 and self.ll[-1] - self.ll[0] > 1 and self.ll[-1] - self.ll[0] < len(self.ll):
-            self.p2points += (len(set(self.ll)) * len(self.ll - len(set(self.ll)) + 1))
+            self.p2points += (len(set(self.ll)) * (len(self.ll) - len(set(self.ll)) + 1))
         self.newnums = []
         for i in Choice:
             self.newnums.append(i)
