@@ -30,19 +30,17 @@ class Game:
 
     def player1(self, selection):
         player1.playcard1(selection)
-        score = score_points()
         score.basic(player1, player2, selection)
 
     def player2(self, selection):
         player2.playcard2(selection)
-        score = score_points()
         score.basic(player2, player1, selection)
 
 class score_points:
-    game = Game()
-    currentcards = []
-    allcards = game.cardsplayed
-    game.cardsplayed = []
+    def __init__(self):
+        game = Game()
+        self.currentcards = []
+        self.allcards = game.cardsplayed
     def basic(self, player, otherplayer, selection):
         value = Deck.numbers.index(selection.num)+1
         if value > 10:
@@ -53,32 +51,44 @@ class score_points:
             if game.currentvalue == 15:
                 player.pointsearned += 2
 
-            elif game.currentvalue == 31:
+            if game.currentvalue == 31:
                 player.pointsearned += 2
                 game.currentvalue = 0
                 self.currentcards = []
-
         else:
             game.currentvalue = 0
             self.currentcards = []
             otherplayer.pointsearned += 1
             game.currentvalue += value
-
         self.currentcards.append(selection)
         self.allcards.append(selection)
 
         self.pairs(player)
 
     def pairs(self, player):
-        if len(self.currentcards) > 2:
-            if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num == self.currentcards[-4]:
-                player.pointsearned += 12
-            else:
-                if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num:
-                    player.pointsearned += 6
-                elif len(self.currentcards) > 1:
-                    if self.currentcards[-1].num == self.currentcards[-2].num:
+        self.mybool = True
+        print(self.currentcards)
+        if len(self.currentcards) > 1:
+            try:
+                if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num == self.currentcards[-4]:
+                    print('pair')
+                    player.pointsearned += 12
+                    self.mybool = False
+            except IndexError:
+                pass
+            if self.mybool == True:
+                try:
+                    if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num:
+                        print('pair')
+                        player.pointsearned += 6
+                        self.mybool = False
+                except IndexError:
+                    pass
+            if self.mybool == True:
+                if self.currentcards[-1].num == self.currentcards[-2].num:
+                        print('pair')
                         player.pointsearned += 2
+                        self.mybool = False
         self.flushes(player)
 
     def flushes(self, player):
@@ -120,14 +130,14 @@ class score_points:
             if self.Bool:
                 return len(list) - j + 1
 game = Game()
+score = score_points()
 # if __name__ == '__main__':
 #     player1hand()
 #     player2hand()
-#     game = Game()
 #     score = score_points()
 #     for i in range(4):
-#         print('p1:' + str(Hand.p1hand[i]))
-#         game.player1(Hand.p1hand[i])
+#         print('p1:' + str(Hand.p2hand[i]))
+#         game.player1(Hand.p2hand[i])
 #         print(game.currentvalue)
 #         print('p2:' + str(Hand.p2hand[i]))
 #         game.player2(Hand.p2hand[i])

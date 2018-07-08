@@ -49,7 +49,6 @@ full = full_game('player1')
 @app.route('/', methods=['GET', 'POST'])
 def index():
     game.cardsplayed = []
-    score = score_points()
     deck, Hand = update_hands()  # resets/shuffles deck and updates hands
     if full.turn == 'player1':
         for i in range(4):
@@ -111,4 +110,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=False)
+    app.run()
