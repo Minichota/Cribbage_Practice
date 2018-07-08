@@ -5,6 +5,7 @@ Deck, Hand = update_hands()
 Hand = Hands()
 class player1hand:
     def __init__(self):
+        self.name = 'player1'
         self.discarded_cards = []
         self.pointsearned = 0
 
@@ -13,6 +14,7 @@ class player1hand:
         game.cardsplayed.append(card)
 class player2hand:
     def __init__(self):
+        self.name = 'player2'
         self.discarded_cards = []
         self.pointsearned = 0
 
@@ -27,7 +29,7 @@ class Game:
     def __init__(self):
         self.currentvalue = 0
         self.cardsplayed = []
-
+        self.pips = []
     def player1(self, selection):
         player1.playcard1(selection)
         score.basic(player1, player2, selection)
@@ -40,7 +42,7 @@ class score_points:
     def __init__(self):
         game = Game()
         self.currentcards = []
-        self.allcards = game.cardsplayed
+
     def basic(self, player, otherplayer, selection):
         value = Deck.numbers.index(selection.num)+1
         if value > 10:
@@ -50,29 +52,36 @@ class score_points:
 
             if game.currentvalue == 15:
                 player.pointsearned += 2
-
+                print('15')
+                game.pips.append(str(player.name) + ' scored a 15!')
             if game.currentvalue == 31:
                 player.pointsearned += 2
                 game.currentvalue = 0
                 self.currentcards = []
+                print('31!!!!')
+                game.pips.append(str(player.name) + ' scored a 31!')
         else:
             game.currentvalue = 0
             self.currentcards = []
             otherplayer.pointsearned += 1
             game.currentvalue += value
+            print('go')
+            game.pips.append(str(otherplayer.name) + " got go'd")
         self.currentcards.append(selection)
-        self.allcards.append(selection)
-
+        if len(game.cardsplayed) == 8:
+            player.pointsearned += 1
+            print('last card')
+            game.pips.append(str(player.name)+' played the last card')
         self.pairs(player)
 
     def pairs(self, player):
         self.mybool = True
-        print(self.currentcards)
         if len(self.currentcards) > 1:
             try:
                 if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num == self.currentcards[-4]:
                     print('pair')
                     player.pointsearned += 12
+                    game.pips.append(str(player.name) + ' got a pair of 4!')
                     self.mybool = False
             except IndexError:
                 pass
@@ -80,6 +89,7 @@ class score_points:
                 try:
                     if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num:
                         print('pair')
+                        game.pips.append(str(player.name) + ' got a pair of 3!')
                         player.pointsearned += 6
                         self.mybool = False
                 except IndexError:
@@ -88,6 +98,7 @@ class score_points:
                 if self.currentcards[-1].num == self.currentcards[-2].num:
                         print('pair')
                         player.pointsearned += 2
+                        game.pips.append(str(player.name) + ' scored a pair of 2!')
                         self.mybool = False
         self.flushes(player)
 
@@ -103,6 +114,8 @@ class score_points:
             self.count = i
         if self.count >= 4:
             player.pointsearned += self.count
+            print('flush')
+            game.pips.append(str(player.name) + ' scored a flush')
         self.runs(player)
 
     def runs(self, player):
@@ -113,6 +126,8 @@ class score_points:
         if len(self.currentcards) > 2:
             try:
                 player.pointsearned += self.calculation(self.nums)
+                print('run')
+                game.pips.append(str(player.name) + ' scored a run of ' + str(self.calculation(self.nums)))
             except TypeError:
                 pass
     def calculation(self, list):
@@ -129,17 +144,18 @@ class score_points:
                     break
             if self.Bool:
                 return len(list) - j + 1
+
 game = Game()
 score = score_points()
 # if __name__ == '__main__':
 #     player1hand()
 #     player2hand()
-#     score = score_points()
 #     for i in range(4):
-#         print('p1:' + str(Hand.p2hand[i]))
-#         game.player1(Hand.p2hand[i])
+#         print('p1:' + str(Hand.p1hand[i]))
+#         game.player1(Hand.p1hand[i])
 #         print(game.currentvalue)
 #         print('p2:' + str(Hand.p2hand[i]))
 #         game.player2(Hand.p2hand[i])
 #         print(game.currentvalue)
 #     print(player1.pointsearned, player2.pointsearned)
+#     print(game.pips)

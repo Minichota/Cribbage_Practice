@@ -48,6 +48,7 @@ full = full_game('player1')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    game.pips = []
     game.cardsplayed = []
     deck, Hand = update_hands()  # resets/shuffles deck and updates hands
     if full.turn == 'player1':
@@ -73,7 +74,7 @@ def index():
             point.get_var1(), point.get_var2(),
             addscore.get_var1(), addscore.get_var2(),
             player1.pointsearned, player2.pointsearned,
-            game.cardsplayed)  # building main template
+            game.cardsplayed, game.pips)  # building main template
     print(addscore.get_var1(), addscore.get_var2())
     if full.turn == 'player1':
         if addscore.get_var1() >= 121:
