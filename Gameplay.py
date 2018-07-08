@@ -40,7 +40,6 @@ class Game:
 
 class score_points:
     def __init__(self):
-        game = Game()
         self.currentcards = []
 
     def basic(self, player, otherplayer, selection):
@@ -52,25 +51,21 @@ class score_points:
 
             if game.currentvalue == 15:
                 player.pointsearned += 2
-                print('15')
                 game.pips.append(str(player.name) + ' scored a 15!')
             if game.currentvalue == 31:
                 player.pointsearned += 2
                 game.currentvalue = 0
                 self.currentcards = []
-                print('31!!!!')
                 game.pips.append(str(player.name) + ' scored a 31!')
         else:
             game.currentvalue = 0
             self.currentcards = []
             otherplayer.pointsearned += 1
             game.currentvalue += value
-            print('go')
             game.pips.append(str(otherplayer.name) + " got go'd")
         self.currentcards.append(selection)
         if len(game.cardsplayed) == 8:
             player.pointsearned += 1
-            print('last card')
             game.pips.append(str(player.name)+' played the last card')
         self.pairs(player)
 
@@ -79,7 +74,6 @@ class score_points:
         if len(self.currentcards) > 1:
             try:
                 if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num == self.currentcards[-4]:
-                    print('pair')
                     player.pointsearned += 12
                     game.pips.append(str(player.name) + ' got a pair of 4!')
                     self.mybool = False
@@ -88,7 +82,6 @@ class score_points:
             if self.mybool == True:
                 try:
                     if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num:
-                        print('pair')
                         game.pips.append(str(player.name) + ' got a pair of 3!')
                         player.pointsearned += 6
                         self.mybool = False
@@ -96,7 +89,6 @@ class score_points:
                     pass
             if self.mybool == True:
                 if self.currentcards[-1].num == self.currentcards[-2].num:
-                        print('pair')
                         player.pointsearned += 2
                         game.pips.append(str(player.name) + ' scored a pair of 2!')
                         self.mybool = False
@@ -114,7 +106,6 @@ class score_points:
             self.count = i
         if self.count >= 4:
             player.pointsearned += self.count
-            print('flush')
             game.pips.append(str(player.name) + ' scored a flush')
         self.runs(player)
 
@@ -126,7 +117,6 @@ class score_points:
         if len(self.currentcards) > 2:
             try:
                 player.pointsearned += self.calculation(self.nums)
-                print('run')
                 game.pips.append(str(player.name) + ' scored a run of ' + str(self.calculation(self.nums)))
             except TypeError:
                 pass
