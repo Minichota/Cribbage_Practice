@@ -20,10 +20,6 @@ class full_game:
         if playersturn == 'player2':
             game.player2(cardselected)
 
-    def Play(self):
-        # Hand.p1hand[Hand.p1hand.index(Card)] = 'Blank.png'
-        print('wow')
-
 @app.route('/end', methods=['GET', 'POST'])
 def end():
     score1 = addscore.get_var1()
