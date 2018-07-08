@@ -120,16 +120,16 @@ class score_points:
             if self.Bool:
                 return len(list) - j + 1
 game = Game()
-if __name__ == '__main__':
-    player1hand()
-    player2hand()
-    game = Game()
-    score = score_points()
-    for i in range(4):
-        print('p1:' + str(Hand.p1hand[i]))
-        game.player1(Hand.p1hand[i])
-        print(game.currentvalue)
-        print('p2:' + str(Hand.p2hand[i]))
-        game.player2(Hand.p2hand[i])
-        print(game.currentvalue)
-    print(player1.pointsearned, player2.pointsearned)
+# if __name__ == '__main__':
+#     player1hand()
+#     player2hand()
+#     game = Game()
+#     score = score_points()
+#     for i in range(4):
+#         print('p1:' + str(Hand.p1hand[i]))
+#         game.player1(Hand.p1hand[i])
+#         print(game.currentvalue)
+#         print('p2:' + str(Hand.p2hand[i]))
+#         game.player2(Hand.p2hand[i])
+#         print(game.currentvalue)
+#     print(player1.pointsearned, player2.pointsearned)
