@@ -4,7 +4,7 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="static/script.js"></script>
-<body>
+<body background="static/backround.jpg">
 <div id="div0">
     It is currently {}'s turn<br>
     The Extra card is<br>
@@ -12,18 +12,18 @@
 </div>
 <div id="div1">
     Player ones hand is:<br>
-    <button class="card1"><img src="{{url_for('static', filename=image_name)}}" width="50" onclick="card1();"/></button>
-    <button class="card2"><img src="{{url_for('static', filename=image_name2)}}" width="50" onclick="card2();"/></button>
-    <button class="card3"><img src="{{url_for('static', filename=image_name3)}}" width="50" onclick="card3();"/></button>
-    <button class="card4"><img src="{{url_for('static', filename=image_name4)}}" width="50" onclick="card4();"/></button>
+    <img src="{{url_for('static', filename=image_name)}}" width="50" onclick="card1();" class="card1"/>
+    <img src="{{url_for('static', filename=image_name2)}}" width="50" onclick="card2();" class="card2"/>
+    <img src="{{url_for('static', filename=image_name3)}}" width="50" onclick="card3();" class="card3"/>
+    <img src="{{url_for('static', filename=image_name4)}}" width="50" onclick="card4();" class="card4"/>
     This is worth: {} points<br>
 </div>
 <div id="div2">
     Player twos hand is:<br>
-    <button class="card5"><img src="{{url_for('static', filename=image_name5)}}" width="50" onclick="card5();"/></button>
-    <button class="card6"><img src="{{url_for('static', filename=image_name6)}}" width="50" onclick="card6();"/></button>
-    <button class="card7"><img src="{{url_for('static', filename=image_name7)}}" width="50" onclick="card7();"/></button>
-    <button class="card8"><img src="{{url_for('static', filename=image_name8)}}" width="50" onclick="card8();"/></button>
+    <img src="{{url_for('static', filename=image_name5)}}" width="50" onclick="card1();" class="card5"/>
+    <img src="{{url_for('static', filename=image_name6)}}" width="50" onclick="card2();" class="card6"/>
+    <img src="{{url_for('static', filename=image_name7)}}" width="50" onclick="card3();" class="card7"/>
+    <img src="{{url_for('static', filename=image_name8)}}" width="50" onclick="card4();" class="card8"/>
     This is worth: {} points
 </div>
 <div id="div3">
