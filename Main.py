@@ -1,7 +1,7 @@
 import Points
 from flask import Flask, render_template, request, url_for, redirect
 from Tands import Hands, Deck, Scores, update_hands
-from Gameplay import player1hand, player2hand, score_points, player1, player2, game
+from Gameplay import player1, player2, score
 import os
 app = Flask(__name__, template_folder=os.getcwd() + '/templates')
 addscore = Scores(0, 0)
@@ -13,9 +13,9 @@ class full_game:
 
     def Playerturn(self, playersturn, cardselected):
         if playersturn == 'player1':
-            game.player1(cardselected)
+            player1.playcard1(cardselected)
         if playersturn == 'player2':
-            game.player2(cardselected)
+            player2.playcard2(cardselected)
 
 
 @app.route('/end')
@@ -47,8 +47,8 @@ full = full_game('player1')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    game.pips = []
-    game.cardsplayed = []
+    score.pips = []
+    score.cardsplayed = []
     deck, Hand = update_hands()  # resets/shuffles deck and updates hands
     if full.turn == 'player1':
         for i in range(4):
@@ -74,7 +74,7 @@ def index():
             point.get_var1(), point.get_var2(),
             addscore.get_var1(), addscore.get_var2(),
             player1.pointsearned, player2.pointsearned,
-            game.cardsplayed, game.pips)  # building main template
+            score.cardsplayed, score.pips)  # building main template
 
     print(addscore.get_var1(), addscore.get_var2())
 
