@@ -50,7 +50,7 @@ class score_points:
                 player.pointsearned += 2
                 self.currentvalue = 0
                 self.currentcards = []
-                self.pips.append.append(str(player.name) + ' scored a 31!')
+                self.pips.append(str(player.name) + ' scored a 31!')
         else:
             self.currentvalue = 0
             self.currentcards = []
