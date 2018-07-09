@@ -45,7 +45,7 @@ class score_points:
 
             if self.currentvalue == 15:
                 player.pointsearned += 2
-                self.pips.append.append(str(player.name) + ' scored a 15!')
+                self.pips.append(str(player.name) + ' scored a 15!')
             if self.currentvalue == 31:
                 player.pointsearned += 2
                 self.currentvalue = 0
