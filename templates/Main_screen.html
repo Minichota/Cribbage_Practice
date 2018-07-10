@@ -4,39 +4,45 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="static/script.js"></script>
-<body background="static/backround.jpg">
+<body background="static/background.jpg">
 <div id="div0">
-    It is currently {}'s turn<br>
-    The Extra card is<br>
-        <img src="{{url_for('static', filename=extra)}}" width="50" /><br>
+    <p style="color:white" align="center">It is currently {}'s turn<br>
+        The Extra card is:<br></p>
+    <p style="text-align:center;"><img src="{{url_for('static', filename=extra)}}" width="50" align="center"/><br></p>
 </div>
 <div id="div1">
-    Player ones hand is:<br>
+    <p style="color:white" align=left>Player ones hand is:<br>
     <img src="{{url_for('static', filename=image_name)}}" width="50" onclick="card1();" class="card1"/>
     <img src="{{url_for('static', filename=image_name2)}}" width="50" onclick="card2();" class="card2"/>
     <img src="{{url_for('static', filename=image_name3)}}" width="50" onclick="card3();" class="card3"/>
-    <img src="{{url_for('static', filename=image_name4)}}" width="50" onclick="card4();" class="card4"/>
-    This is worth: {} points<br>
-</div>
-<div id="div2">
-    Player twos hand is:<br>
+    <img src="{{url_for('static', filename=image_name4)}}" width="50" onclick="card4();" class="card4"/><br>
+    This is worth: {} points<br></p>
+    <p style="color:white" align=right>Player twos hand is:<br>
     <img src="{{url_for('static', filename=image_name5)}}" width="50" onclick="card5();" class="card5"/>
     <img src="{{url_for('static', filename=image_name6)}}" width="50" onclick="card6();" class="card6"/>
     <img src="{{url_for('static', filename=image_name7)}}" width="50" onclick="card7();" class="card7"/>
-    <img src="{{url_for('static', filename=image_name8)}}" width="50" onclick="card8();" class="card8"/>
-    This is worth: {} points
+    <img src="{{url_for('static', filename=image_name8)}}" width="50" onclick="card8();" class="card8"/><br>
+    This is worth: {} points<br></p>
 </div>
 <div id="div3">
-    <p>The new score is {} to {}</p>
+    <p style="color:white" align="center">The new score is {} to {}</p>
 
     <form method="post" action="/">
-        <input type="submit" value="Next turn" name="Next turn" style="height:50px; width:200px"/>
+        <p align="center"><input type="submit" value="Next turn" name="Next turn" style="height:50px; width:200px" align="center"/></p>
     </form>
 </div>
 <div id="div4">
-    <p align="right">Through an automatically played hand
+    <p align=right style="color:white">Through an automatically played hand
         <br>Player one scored {} points and Player two scored {} points<br>
-        The cards were played as follows: {}<br>
+        The cards were played as follows:<br>
+        <img src="{{url_for('static', filename=card1)}}" width="50"/>
+        <img src="{{url_for('static', filename=card2)}}" width="50"/>
+        <img src="{{url_for('static', filename=card3)}}" width="50"/>
+        <img src="{{url_for('static', filename=card4)}}" width="50"/>
+        <img src="{{url_for('static', filename=card5)}}" width="50"/>
+        <img src="{{url_for('static', filename=card6)}}" width="50"/>
+        <img src="{{url_for('static', filename=card7)}}" width="50"/>
+        <img src="{{url_for('static', filename=card8)}}" width="50"/><br>
         Points were scored as follows: {}</p>
 </div>
 </body>

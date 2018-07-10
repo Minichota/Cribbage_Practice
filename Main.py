@@ -63,18 +63,20 @@ def index():
     point.calculation(Hand.p1hand[0:4], Hand.Extra)  # returns player1's points
     point.calculation2(Hand.p2hand[0:4], Hand.Extra)  # returns player2's points
     addscore.update(point.get_var1(), point.get_var2())  # adds those scores to variable of players scores
-
     page = render_template('Main_screen.html',
             extra=Hand.Extra[0].path,
             image_name=Hand.p1hand[0].path, image_name2=Hand.p1hand[1].path,
             image_name3=Hand.p1hand[2].path, image_name4=Hand.p1hand[3].path,
             image_name5=Hand.p2hand[0].path, image_name6=Hand.p2hand[1].path,
-            image_name7=Hand.p2hand[2].path, image_name8=Hand.p2hand[3].path).format(
+            image_name7=Hand.p2hand[2].path, image_name8=Hand.p2hand[3].path,
+            card1=score.cardsplayed[0].path, card2=score.cardsplayed[1].path,
+            card3 = score.cardsplayed[2].path, card4=score.cardsplayed[3].path,
+            card5=score.cardsplayed[4].path, card6=score.cardsplayed[5].path,
+            card7=score.cardsplayed[6].path, card8=score.cardsplayed[7].path).format(
             full.turn,
             point.get_var1(), point.get_var2(),
             addscore.get_var1(), addscore.get_var2(),
-            player1.pointsearned, player2.pointsearned,
-            score.cardsplayed, score.pips)  # building main template
+            player1.pointsearned, player2.pointsearned, score.pips)  # building main template
 
     print(addscore.get_var1(), addscore.get_var2())
 
