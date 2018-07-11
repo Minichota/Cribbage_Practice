@@ -77,43 +77,28 @@ def index():
             point.p1points, point.p2points,
             addscore.get_var1(), addscore.get_var2(),
             player1.pointsearned, player2.pointsearned, score.pips)  # building main template
+    player1.__init__()
+    player2.__init__()
+    point.__init__()
     if full.turn == 'player1':
         if addscore.get_var1() >= 121:
             full.__init__('player2')
-            player1.__init__()
-            player2.__init__()
-            point.__init__()
             return redirect(url_for('end'))
         elif addscore.get_var2() >= 121:
             full.__init__('player2')
-            player1.__init__()
-            player2.__init__()
-            point.__init__()
             return redirect(url_for('end1'))
         else:
             full.__init__('player2')
-            player1.__init__()
-            player2.__init__()
-            point.__init__()
             return page
     else:
         if addscore.get_var2() >= 121:
             full.__init__('player1')
-            player1.__init__()
-            player2.__init__()
-            point.__init__()
             return redirect(url_for('end1'))
         elif addscore.get_var1() >= 121:
             full.__init__('player1')
-            player1.__init__()
-            player2.__init__()
-            point.__init__()
             return redirect(url_for('end'))
         else:
             full.__init__('player1')
-            player1.__init__()
-            player2.__init__()
-            point.__init__()
             return page
 
 
