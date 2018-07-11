@@ -60,8 +60,8 @@ def index():
             full.Playerturn('player1', Hand.p1hand[i])
 
     print(player1.pointsearned, player2.pointsearned)
-    point.calculation(Hand.p1hand[0:4], Hand.Extra)  # returns player1's points
-    point.calculation2(Hand.p2hand[0:4], Hand.Extra)  # returns player2's points
+    point.calculation(Hand.p1hand[0:4], Hand.Extra, 'p1')  # returns player1's points
+    point.calculation(Hand.p2hand[0:4], Hand.Extra, 'p2')
     addscore.update(point.get_var1(), point.get_var2())  # adds those scores to variable of players scores
     page = render_template('Main_screen.html',
             extra=Hand.Extra[0].path,
@@ -74,43 +74,46 @@ def index():
             card5=score.cardsplayed[4].path, card6=score.cardsplayed[5].path,
             card7=score.cardsplayed[6].path, card8=score.cardsplayed[7].path).format(
             full.turn,
-            point.get_var1(), point.get_var2(),
+            point.p1points, point.p2points,
             addscore.get_var1(), addscore.get_var2(),
             player1.pointsearned, player2.pointsearned, score.pips)  # building main template
-
-    print(addscore.get_var1(), addscore.get_var2())
-
     if full.turn == 'player1':
         if addscore.get_var1() >= 121:
             full.__init__('player2')
             player1.__init__()
             player2.__init__()
+            point.__init__()
             return redirect(url_for('end'))
         elif addscore.get_var2() >= 121:
             full.__init__('player2')
             player1.__init__()
             player2.__init__()
+            point.__init__()
             return redirect(url_for('end1'))
         else:
             full.__init__('player2')
             player1.__init__()
             player2.__init__()
+            point.__init__()
             return page
     else:
         if addscore.get_var2() >= 121:
             full.__init__('player1')
             player1.__init__()
             player2.__init__()
+            point.__init__()
             return redirect(url_for('end1'))
         elif addscore.get_var1() >= 121:
             full.__init__('player1')
             player1.__init__()
             player2.__init__()
+            point.__init__()
             return redirect(url_for('end'))
         else:
             full.__init__('player1')
             player1.__init__()
             player2.__init__()
+            point.__init__()
             return page
 
 
