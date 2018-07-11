@@ -10,7 +10,7 @@ class Point_Counter:
         self.y = 0
         self.p1points = 0
         self.p2points = 0
-        self.pairs = {4: 2, 8: 4, 9: 6, 13: 8, 16: 12}
+        self.pairs = {0: 0, 4: 2, 8: 4, 9: 6, 13: 8, 16: 12}
 
     def calculation(self, Choice, Extra, player):
         self.choice = Choice+Extra
@@ -32,9 +32,10 @@ class Point_Counter:
         for num in self.handrealnums:
             if self.handrealnums.count(num) > 1:
                 self.y += self.handrealnums.count(num)
-
+        print(self.y)
         self.points += self.pairs[self.y]
         self.y = 0
+
         for i in range(2, 6):
             for subset in itertools.combinations(self.handnums, i):
                 if sum(subset) == 15:
