@@ -47,12 +47,12 @@ def minimalplaychecker():
 class end(Resource):
     def post(self):
         if request.form['submit'] == 'Restart':
-            scores.__init__(0, 0)
+            scores.__init__()
     def get(self):
         winner = request.args['winner']
         score1 = scores.get_var1()
         score2 = scores.get_var2()
-        scores.__init__(0, 0)
+        scores.__init__()
         return make_response(render_template('End.html').format(winner, score1, score2, full.turn), 200, headers)
 
 full = full_game('player1')
