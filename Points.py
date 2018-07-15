@@ -27,12 +27,10 @@ class Point_Counter:
             self.handnums.append(self.value)
             self.handsuits.append(card.suit)
             self.handrealnums.append(self.value2)
-        print(self.handnums, self.handsuits, self.handrealnums)
 
         for num in self.handrealnums:
             if self.handrealnums.count(num) > 1:
                 self.y += self.handrealnums.count(num)
-        print(self.y)
         self.points += self.pairs[self.y]
         self.y = 0
 
@@ -71,7 +69,6 @@ class Point_Counter:
         for i in self.newnums:
             if Extra[0].suit == i.suit and Deck.numbers.index(i.num) == 10:
                 self.points += 1
-                print('knobs')
         if player == 'p1':
             self.p1points += self.points
         elif player == 'p2':

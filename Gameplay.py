@@ -1,27 +1,23 @@
-from Tands import Hands, Deck, update_hands, Card
-from itertools import groupby
-import operator
-Deck, Hand = update_hands()
+from Tands import Hands, Deck
 Hand = Hands()
+deck = Deck()
+Hand.build()
+deck.shuffle()
 class player1hand:
     def __init__(self):
         self.name = 'player1'
-        self.discarded_cards = []
         self.pointsearned = 0
 
     def playcard1(self, card):
-        self.discarded_cards.append(card)
         score.cardsplayed.append(card)
         score.basic(player1, player2, card)
 
 class player2hand:
     def __init__(self):
         self.name = 'player2'
-        self.discarded_cards = []
         self.pointsearned = 0
 
     def playcard2(self, card):
-        self.discarded_cards.append(card)
         score.cardsplayed.append(card)
         score.basic(player2, player1, card)
 
@@ -37,7 +33,7 @@ class score_points:
         self.currentvalue = 0
 
     def basic(self, player, otherplayer, selection):
-        value = Deck.numbers.index(selection.num)+1
+        value = deck.numbers.index(selection.num)+1
         if value > 10:
             value = 10
         if self.currentvalue + value <= 31:
@@ -106,7 +102,7 @@ class score_points:
     def runs(self, player):
         self.nums = []
         for card in self.currentcards:
-            self.value = Deck.numbers.index(card.num)+1
+            self.value = deck.numbers.index(card.num)+1
             self.nums.append(self.value)
         if len(self.currentcards) > 2:
             try:

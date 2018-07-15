@@ -10,18 +10,18 @@
         The Extra card is:<br></p>
     <p style="text-align:center;"><img src="{{url_for('static', filename=extra)}}" width="50" align="center"/><br></p>
 </div>
-<div id="div1">
+<div id="div1">:
     <p style="color:white" align=left>Player ones hand is:<br>
-    <img src="{{url_for('static', filename=image_name)}}" width="50" onclick="card1();" class="card1"/>
-    <img src="{{url_for('static', filename=image_name2)}}" width="50" onclick="card2();" class="card2"/>
-    <img src="{{url_for('static', filename=image_name3)}}" width="50" onclick="card3();" class="card3"/>
-    <img src="{{url_for('static', filename=image_name4)}}" width="50" onclick="card4();" class="card4"/><br>
+    <img src="{{url_for('static', filename=image_name)}}"  width="50" onclick="remove('.card1');" class="card1"/>
+    <img src="{{url_for('static', filename=image_name2)}}" width="50" onclick="remove('.card2');" class="card2"/>
+    <img src="{{url_for('static', filename=image_name3)}}" width="50" onclick="remove('.card3');" class="card3"/>
+    <img src="{{url_for('static', filename=image_name4)}}" width="50" onclick="remove('.card4');" class="card4"/><br>
     This is worth: {} points<br></p>
     <p style="color:white" align=right>Player twos hand is:<br>
-    <img src="{{url_for('static', filename=image_name5)}}" width="50" onclick="card5();" class="card5"/>
-    <img src="{{url_for('static', filename=image_name6)}}" width="50" onclick="card6();" class="card6"/>
-    <img src="{{url_for('static', filename=image_name7)}}" width="50" onclick="card7();" class="card7"/>
-    <img src="{{url_for('static', filename=image_name8)}}" width="50" onclick="card8();" class="card8"/><br>
+    <img src="{{url_for('static', filename=image_name5)}}" width="50" onclick="remove('.card5');" class="card5"/>
+    <img src="{{url_for('static', filename=image_name6)}}" width="50" onclick="remove('.card6');" class="card6"/>
+    <img src="{{url_for('static', filename=image_name7)}}" width="50" onclick="remove('.card7');" class="card7"/>
+    <img src="{{url_for('static', filename=image_name8)}}" width="50" onclick="remove('.card8');" class="card8"/><br>
     This is worth: {} points<br></p>
 </div>
 <div id="div3">
@@ -44,6 +44,11 @@
         <img src="{{url_for('static', filename=card7)}}" width="50"/>
         <img src="{{url_for('static', filename=card8)}}" width="50"/><br>
         Points were scored as follows: {}</p>
+</div>
+<div id="div5">
+    <p align="left" style="color:white" class="para">
+        The cards you have selected to be played so far are:
+    </p>
 </div>
 </body>
 </html>
