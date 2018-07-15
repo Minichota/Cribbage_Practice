@@ -12,6 +12,9 @@ point = Points.Point_Counter()
 deck = Deck()
 Hand = Hands()
 Played = []
+def reset():
+    global Played
+    Played = []
 class full_game:
     def __init__(self, turn):
         self.turn = turn
@@ -24,6 +27,7 @@ class full_game:
 
 @app.route('/image_movement/<card>')
 def minimalplay(card):
+    point.__init__()
     card = card.strip('.')
     Played.append(keys[card])
     return str(keys[card])
@@ -35,6 +39,7 @@ def minimalplaychecker():
         for i in range(4):
             full.Playerturn('player1', Played[i*int('2')])
             full.Playerturn('player2', Played[i*int('2')+1])
+
         return str(player1.pointsearned)+'_'+str(player2.pointsearned)
     else:
         return ''
@@ -55,8 +60,9 @@ full = full_game('player1')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    reset()
     Hand.build()
-
+    score.__init__()
     if full.turn == 'player1':
         for i in range(4):
             full.Playerturn('player1', Hand.p1hand[i])
