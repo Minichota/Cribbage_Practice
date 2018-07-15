@@ -27,7 +27,6 @@ class full_game:
 
 @app.route('/image_movement/<card>')
 def minimalplay(card):
-    point.__init__()
     card = card.strip('.')
     Played.append(keys[card])
     return str(keys[card])
@@ -36,11 +35,11 @@ def minimalplay(card):
 @app.route('/image_movement2')
 def minimalplaychecker():
     if len(Played) == 8:
+        score.__init__()
         for i in range(4):
             full.Playerturn('player1', Played[i*int('2')])
             full.Playerturn('player2', Played[i*int('2')+1])
-
-        return str(player1.pointsearned)+'_'+str(player2.pointsearned)
+        return str(player1.pointsearned)+'_'+str(player2.pointsearned)+'_'+str(score.pips)
     else:
         return ''
 

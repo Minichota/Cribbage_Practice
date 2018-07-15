@@ -30,7 +30,9 @@ type: "GET",
 url: "/image_movement2",
 async: false
 }).responseText;
+var List2 = points.split('_')
 if(points != ''){
-$(".para").append('The score from these 8 cards is: {0}'.format(points));
+$(".para").append('The score from these 8 cards is: {0} to {1}<br><br>'.format(List2[0], List2[1]));
+$(".para").append('They were scored as follows: {0}'.format(List2[2]))
 }
 }
