@@ -100,14 +100,14 @@ def index():
             return redirect(url_for('end', winner='player 1'))
         elif scores.get_var2() >= 121:
             full.__init__('player2')
-            return redirect(url_for('end1', winner='player 2'))
+            return redirect(url_for('end', winner='player 2'))
         else:
             full.__init__('player2')
             return page
     else:
         if scores.get_var2() >= 121:
             full.__init__('player1')
-            return redirect(url_for('end1', winner='player 2'))
+            return redirect(url_for('end', winner='player 2'))
         elif scores.get_var1() >= 121:
             full.__init__('player1')
             return redirect(url_for('end', winner='player 1'))

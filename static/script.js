@@ -23,7 +23,6 @@ var card = List[i].replace(' ', '_');
 var newcard = card.replace(' ', '_');
 console.log(newcard.toLowerCase());
 $(".para").append("<img src={0} width='50'/>".format('static/'+newcard.toLowerCase()+'.png'));
-
 }
 var points = $.ajax({
 type: "GET",
