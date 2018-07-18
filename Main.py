@@ -55,8 +55,8 @@ class end(Resource):
             handscores.reset()
     def get(self):
         winner = request.args['winner']
-        score1 = scores.get_var1()
-        score2 = scores.get_var2()
+        score1 = handscores.get_var1()
+        score2 = handscores.get_var2()
         handscores.reset()
         return make_response(render_template('End.html').format(winner, score1, score2, full.turn), 200, headers)
 
