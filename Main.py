@@ -1,34 +1,32 @@
 import Points
 from flask import Flask, render_template, request, url_for, redirect, make_response
 from flask_restful import Api, Resource
-from Tands import Scores, Deck, Hands
-from Gameplay import player1, player2, score
+from Tands import Handscore, Deck, Hands
+from Gameplay import player1, player2, score, clearplayers
 import os
 app = Flask(__name__, template_folder=os.getcwd() + '/templates')
 api = Api(app)
 headers = {'Content-Type': 'text/html'}
-scores = Scores()
+handscores = Handscore()
 point = Points.Point_Counter()
 deck = Deck()
 Hand = Hands()
 Played = []
 
-
 def reset():
     global Played
     Played = []
-
-
+    score.reset()
 class full_game:
     def __init__(self, turn, otherturn):
         self.turn = turn
         self.otherturn = otherturn
+
     def Playerturn(self, playersturn, cardselected):
         if playersturn == 'player1':
-
-            player1.playcard1(cardselected)
+            player1.playcard(cardselected, playersturn)
         if playersturn == 'player2':
-            player2.playcard2(cardselected)
+            player2.playcard(cardselected, playersturn)
 
 
 @app.route('/image_movement/<card>')
@@ -40,9 +38,8 @@ def minimalplay(card):
 
 @app.route('/image_movement2')
 def minimalplaychecker():
-    score.__init__()
-    player1.__init__()
-    player2.__init__()
+    score.reset()
+    clearplayers()
     for i in range(len(Played)):
         if i % 2 == 0:
             turn = full.turn
@@ -55,12 +52,12 @@ def minimalplaychecker():
 class end(Resource):
     def post(self):
         if request.form['submit'] == 'Restart':
-            scores.__init__()
+            handscores.reset()
     def get(self):
         winner = request.args['winner']
         score1 = scores.get_var1()
         score2 = scores.get_var2()
-        scores.__init__()
+        handscores.reset()
         return make_response(render_template('End.html').format(winner, score1, score2, full.turn), 200, headers)
 
 full = full_game('player1', 'player2')
@@ -69,7 +66,6 @@ full = full_game('player1', 'player2')
 def index():
     reset()
     Hand.build()
-    score.__init__()
     if full.turn == 'player1':
         for i in range(4):
             full.Playerturn('player1', Hand.p1hand[i])
@@ -79,10 +75,10 @@ def index():
             full.Playerturn('player2', Hand.p2hand[i])
             full.Playerturn('player1', Hand.p1hand[i])
 
-    point.calculation(Hand.p1hand[0:4], Hand.Extra, 'p1')  # returns player1's points
+    point.calculation(Hand.p1hand[0:4], Hand.Extra, 'p1')  # Calculation of each players points
     point.calculation(Hand.p2hand[0:4], Hand.Extra, 'p2')
-
-    scores.update(point.get_var1(), point.get_var2())  # adds those scores to variable of players scores
+    print(score.cardsplayed)
+    handscores.update(point.get_var1(), point.get_var2())  # adds those scores to variable of players scores
     keyupdate()
     page = make_response(render_template('Main_screen.html',
             extra=Hand.Extra[0].path,
@@ -96,27 +92,26 @@ def index():
             card7=score.cardsplayed[6].path, card8=score.cardsplayed[7].path).format(
             full.turn,
             point.p1points, point.p2points,
-            scores.get_var1(), scores.get_var2(),
+            handscores.get_var1(), handscores.get_var2(),
             player1.pointsearned, player2.pointsearned, score.pips), 200, headers)  # building main template
 
-    player1.__init__()
-    player2.__init__()
+    clearplayers()
     point.__init__()
     if full.turn == 'player1':
-        if scores.get_var1() >= 121:
+        if handscores.get_var1() >= 121:
             full.__init__('player2', 'player1')
             return redirect(url_for('end', winner='player 1'))
-        elif scores.get_var2() >= 121:
+        elif handscores.get_var2() >= 121:
             full.__init__('player2', 'player1')
             return redirect(url_for('end', winner='player 2'))
         else:
             full.__init__('player2', 'player1')
             return page
     else:
-        if scores.get_var2() >= 121:
+        if handscores.get_var2() >= 121:
             full.__init__('player1', 'player2')
             return redirect(url_for('end', winner='player 2'))
-        elif scores.get_var1() >= 121:
+        elif handscores.get_var1() >= 121:
             full.__init__('player1', 'player2')
             return redirect(url_for('end', winner='player 1'))
         else:

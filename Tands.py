@@ -30,7 +30,7 @@ class Hands:
         self.Extra = [deck.deck[12]]
 
 
-class Scores:
+class Handscore:
     def __init__(self):
         self.p1score = 0
         self.p2score = 0
@@ -45,3 +45,6 @@ class Scores:
 
     def get_var2(self):
         return self.p2score
+
+    def reset(self):
+        self.__init__()

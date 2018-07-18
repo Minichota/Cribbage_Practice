@@ -3,26 +3,27 @@ Hand = Hands()
 deck = Deck()
 Hand.build()
 deck.shuffle()
-class player1hand:
-    def __init__(self):
-        self.name = 'player1'
+class Player:
+    players = []
+    def __init__(self, name):
+        self.players.append(name)
+        self.name = name
         self.pointsearned = 0
-
-    def playcard1(self, card):
+        print('w')
+    def playcard(self, card, turn):
         score.cardsplayed.append(card)
-        score.basic(player1, player2, card)
+        if turn == 'player1':
+            score.basic(player1, player2, card)
+        else:
+            score.basic(player2, player1, card)
 
-class player2hand:
-    def __init__(self):
-        self.name = 'player2'
-        self.pointsearned = 0
+def clearplayers():
+    player1.__init__('player1')
+    player2.__init__('player2')
 
-    def playcard2(self, card):
-        score.cardsplayed.append(card)
-        score.basic(player2, player1, card)
 
-player1 = player1hand()
-player2 = player2hand()
+player1 = Player('player1')
+player2 = Player('player2')
 
 
 class score_points:
@@ -124,7 +125,8 @@ class score_points:
                     break
             if self.Bool:
                 return len(list) - j + 1
-
+    def reset(self):
+        self.__init__()
 
 score = score_points()
 # if __name__ == '__main__':
