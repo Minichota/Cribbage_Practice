@@ -33,7 +33,6 @@ class score_points:
         self.currentvalue = 0
 
     def basic(self, player, otherplayer, selection):
-        print(self.cardsplayed)
         value = deck.numbers.index(selection.num)+1
         if value > 10:
             value = 10

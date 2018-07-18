@@ -12,18 +12,24 @@ point = Points.Point_Counter()
 deck = Deck()
 Hand = Hands()
 Played = []
+
+
 def reset():
     global Played
     Played = []
+
+
 class full_game:
-    def __init__(self, turn):
+    def __init__(self, turn, otherturn):
         self.turn = turn
+        self.otherturn = otherturn
     def Playerturn(self, playersturn, cardselected):
         if playersturn == 'player1':
 
             player1.playcard1(cardselected)
         if playersturn == 'player2':
             player2.playcard2(cardselected)
+
 
 @app.route('/image_movement/<card>')
 def minimalplay(card):
@@ -34,14 +40,16 @@ def minimalplay(card):
 
 @app.route('/image_movement2')
 def minimalplaychecker():
-    if len(Played) == 8:
-        score.__init__()
-        for i in range(4):
-            full.Playerturn('player1', Played[i*int('2')])
-            full.Playerturn('player2', Played[i*int('2')+1])
-        return str(player1.pointsearned)+'_'+str(player2.pointsearned)+'_'+str(score.pips)
-    else:
-        return ''
+    score.__init__()
+    player1.__init__()
+    player2.__init__()
+    for i in range(len(Played)):
+        if i % 2 == 0:
+            turn = full.turn
+        else:
+            turn = full.otherturn
+        full.Playerturn(turn, Played[i])
+    return str(player1.pointsearned)+'_'+str(player2.pointsearned)+'_'+str(score.pips)
 
 
 class end(Resource):
@@ -55,7 +63,7 @@ class end(Resource):
         scores.__init__()
         return make_response(render_template('End.html').format(winner, score1, score2, full.turn), 200, headers)
 
-full = full_game('player1')
+full = full_game('player1', 'player2')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -96,23 +104,23 @@ def index():
     point.__init__()
     if full.turn == 'player1':
         if scores.get_var1() >= 121:
-            full.__init__('player2')
+            full.__init__('player2', 'player1')
             return redirect(url_for('end', winner='player 1'))
         elif scores.get_var2() >= 121:
-            full.__init__('player2')
+            full.__init__('player2', 'player1')
             return redirect(url_for('end', winner='player 2'))
         else:
-            full.__init__('player2')
+            full.__init__('player2', 'player1')
             return page
     else:
         if scores.get_var2() >= 121:
-            full.__init__('player1')
+            full.__init__('player1', 'player2')
             return redirect(url_for('end', winner='player 2'))
         elif scores.get_var1() >= 121:
-            full.__init__('player1')
+            full.__init__('player1', 'player2')
             return redirect(url_for('end', winner='player 1'))
         else:
-            full.__init__('player1')
+            full.__init__('player1', 'player2')
             return page
 def keyupdate():
     global keys
@@ -126,6 +134,7 @@ def keyupdate():
     'card7': Hand.p2hand[2],
     'card8': Hand.p2hand[3]
     }
+
 
 api.add_resource(end, '/end')
 if __name__ == '__main__':
