@@ -1,5 +1,7 @@
-console.log('JS loaded');
 var count = 0
+var selected = [false, false, false, false, false, false]
+var check = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6']
+var p1cards = [];
 String.prototype.format = function() {
   a = this;
   for (k in arguments) {
@@ -7,8 +9,10 @@ String.prototype.format = function() {
   }
   return a
 }
+
 function myTrim(x) {
-    return x.replace('.','');
+    x.replace(',', '');
+    return x;
 }
 function remove(selection){
 var selection = selection
@@ -22,7 +26,6 @@ List.push($.ajax({
 for (i = 0; i < List.length; i++){
 var card = List[i].replace(' ', '_');
 var newcard = card.replace(' ', '_');
-console.log(newcard.toLowerCase());
 $(".para").append("<img src={0} width='50'/>".format('static/'+newcard.toLowerCase()+'.png'));
 }
 var points = $.ajax({
@@ -31,7 +34,6 @@ url: "/image_movement2",
 async: false
 }).responseText;
 var List2 = points.split('_')
-console.log(List2)
 if (count == 0){
 $("#div5").append('<p class=one style="color:white">The score from these cards is: {0} to {1}</p>'.format(List2[0], List2[1]));
 $("#div5").append('<p class=two style="color:white">They were scored as follows: {0}</p>'.format(List2[2]))
@@ -41,4 +43,50 @@ else{
 $(".one").replaceWith('<p class=one style="color:white">The score from these cards is: {0} to {1}</p>'.format(List2[0], List2[1]))
 $(".two").replaceWith('<p class=two style="color:white">They were scored as follows: {0}</p>'.format(List2[2]))
 }
+}
+
+function select(card1){
+p1cards = [];
+var stringcards = $.ajax({
+type: 'GET',
+url: '/p1cards',
+async: false
+}).responseText;
+var disfig = stringcards.split("'");
+for(x=0;x<disfig.length;x++){
+if(disfig[x].includes("of")){
+p1cards.push(disfig[x])
+}
+}
+if (selected[check.indexOf(card1)] == false){
+selected[check.indexOf(card1)] = true;
+}
+else
+{
+selected[check.indexOf(card1)] = false;
+}
+var updated = '.'+card1
+$(updated).toggleClass('selectedIMG');
+}
+function submit(){
+var choices = [];
+var count = 0;
+for(i = 0; i <6; i++){
+if (selected[i] == true){
+count += 1;
+}}
+if (count == 4){
+for(i=0;i<6;i++){
+if(selected[i] == true){
+choices.push(p1cards[i]);
+}}
+for(i=0;i<6;i++){
+if(selected[i] == true){
+$('.'+check[i]).toggleClass('selectedIMG')
+}}
+selected = [false, false, false, false, false, false]
+$(location).attr('href', '/{0}'.format(choices))
+}
+else{
+alert('you must select 4 cards')}
 }

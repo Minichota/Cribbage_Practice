@@ -7,7 +7,8 @@ class Card:
         self.path = self.num.lower()+'_of_'+suit.lower()+'.png'
     def __repr__(self):
         return (self.num + " of " + self.suit)
-
+    def find(self, card):
+        print(deck.deck.index(card))
 class Deck:
     def __init__(self):
         self.suits = ['Diamonds', 'Clubs', 'Spades', 'Hearts']
@@ -48,3 +49,7 @@ class Handscore:
 
     def reset(self):
         self.__init__()
+
+deck = Deck()
+hand = Hands()
+handscores = Handscore()

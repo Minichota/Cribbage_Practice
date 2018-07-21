@@ -1,9 +1,5 @@
-from Tands import Deck, Hands
-import itertools
-
-Deck = Deck()
-Hand = Hands()
-
+from itertools import combinations
+from Deckdata import deck
 
 class Point_Counter:
     def __init__(self):
@@ -20,8 +16,8 @@ class Point_Counter:
         self.points = 0
 
         for card in self.choice:
-            self.value = Deck.numbers.index(card.num) + 1
-            self.value2 = Deck.numbers.index(card.num) + 1
+            self.value = deck.numbers.index(card.num) + 1
+            self.value2 = deck.numbers.index(card.num) + 1
             if self.value > 10:
                 self.value = 10
             self.handnums.append(self.value)
@@ -35,7 +31,7 @@ class Point_Counter:
         self.y = 0
 
         for i in range(2, 6):
-            for subset in itertools.combinations(self.handnums, i):
+            for subset in combinations(self.handnums, i):
                 if sum(subset) == 15:
                     self.points += 2
 
@@ -47,7 +43,7 @@ class Point_Counter:
              pass
         sett = [0, 0, 0]
         for i in range(3, 6):
-            for combo in itertools.combinations(sorted(self.handrealnums), i):
+            for combo in combinations(sorted(self.handrealnums), i):
                 ll = []
                 for num in range(1, len(combo)):
                     prev = combo[num - 1]
@@ -67,7 +63,7 @@ class Point_Counter:
         for i in Choice:
             self.newnums.append(i)
         for i in self.newnums:
-            if Extra[0].suit == i.suit and Deck.numbers.index(i.num) == 10:
+            if Extra[0].suit == i.suit and deck.numbers.index(i.num) == 10:
                 self.points += 1
         if player == 'p1':
             self.p1points += self.points
@@ -80,3 +76,5 @@ class Point_Counter:
 
     def get_var2(self):
         return self.p2points
+
+point = Point_Counter()

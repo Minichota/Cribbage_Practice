@@ -1,16 +1,14 @@
-from Tands import Hands, Deck
-Hand = Hands()
-deck = Deck()
-Hand.build()
-deck.shuffle()
+from Deckdata import deck
+
+
 class Player:
     players = []
     def __init__(self, name):
         self.players.append(name)
         self.name = name
         self.pointsearned = 0
-        print('w')
-    def playcard(self, card, turn):
+
+    def play_card(self, card, turn):
         score.cardsplayed.append(card)
         if turn == 'player1':
             score.basic(player1, player2, card)
@@ -127,6 +125,7 @@ class score_points:
                 return len(list) - j + 1
     def reset(self):
         self.__init__()
+
 
 score = score_points()
 # if __name__ == '__main__':
