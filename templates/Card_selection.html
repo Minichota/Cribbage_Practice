@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="static/script.js"></script>
+    <style>
+    img.selectedIMG{
+    border: 2px solid blue;
+    }
+    </style>
+</head>
+<body>
+<div id ="div1">
+    <img src="{{url_for('static', filename=image_name)}}"  width="50" onclick="select('card1');" class="card1"/>
+    <img src="{{url_for('static', filename=image_name2)}}"  width="50" onclick="select('card2');" class="card2"/>
+    <img src="{{url_for('static', filename=image_name3)}}"  width="50" onclick="select('card3');" class="card3"/>
+    <img src="{{url_for('static', filename=image_name4)}}"  width="50" onclick="select('card4');" class="card4"/>
+    <img src="{{url_for('static', filename=image_name5)}}"  width="50" onclick="select('card5');" class="card5"/>
+    <img src="{{url_for('static', filename=image_name6)}}"  width="50" onclick="select('card6');" class="card6"/>
+    <button name = "Submit" type="submit" onclick="submit();">Submit your selected cards!</button>
+</div>
+</body>
+</html>
