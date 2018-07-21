@@ -24,7 +24,6 @@ class Deck:
 
 class Hands:
     def build(self):
-        deck = Deck()
         deck.shuffle()
         self.p1hand = [deck.deck[0], deck.deck[2], deck.deck[4], deck.deck[6], deck.deck[8], deck.deck[10]]
         self.p2hand = [deck.deck[1], deck.deck[3], deck.deck[5], deck.deck[7], deck.deck[9], deck.deck[11]]

@@ -81,7 +81,6 @@ def selections(selections):
         var = i.split()
         realselections.append(Card(var[0], var[2]))
     reset()
-    hand.build()
     if full.turn == 'player1':
         for i in range(4):
             full.Playerturn('player1', realselections[i])
@@ -93,7 +92,7 @@ def selections(selections):
 
     point.calculation(realselections, hand.Extra, 'p1')  # Calculation of each players points
     point.calculation(hand.p2hand[0:4], hand.Extra, 'p2')
-
+    print(hand.p1hand, hand.p2hand)
     handscores.update(point.get_var1(), point.get_var2())  # adds those scores to variable of players scores
     keyupdate()  # refreshes key for js
     page = make_response(render_template('Main_screen.html',
