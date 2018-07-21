@@ -88,7 +88,7 @@ def selections(selections):
     elif full.turn == 'player2':
         for i in range(4):
             full.Playerturn('player2', realselections[i])
-            full.Playerturn('player1', hand.p1hand[i])
+            full.Playerturn('player1', hand.p2hand[i])
 
     point.calculation(realselections, hand.Extra, 'p1')  # Calculation of each players points
     point.calculation(hand.p2hand[0:4], hand.Extra, 'p2')
