@@ -69,11 +69,12 @@ def p1cards():
 def p2cards():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
-    if(request.remote_addr == s.getsockname()[0]):
+    if request.remote_addr == s.getsockname()[0]:
         s.close()
         return '{}'.format([str(i) for i in hand.p2hand])
 
     else:
+        s.close()
         print('snoop')
         return 'stop snooping around!'
 
