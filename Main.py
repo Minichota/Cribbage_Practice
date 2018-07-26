@@ -114,46 +114,48 @@ def selections(selections):
                 full.Playerturn('player2', realselections[i])
                 full.Playerturn('player1', hand.p2hand[i])
         keyupdate()  # refreshes key for js
-    point.calculation(realselections, hand.Extra, 'p1')  # Calculation of each players points
-    point.calculation(hand.p2hand[0:4], hand.Extra, 'p2')
-    print(hand.p1hand, hand.p2hand)
-    handscores.update(point.get_var1(), point.get_var2())  # adds those scores to variable of players scores
-    page = make_response(render_template('Main_screen.html',
-            extra=hand.Extra[0].path,
-            image_name=realselections[0].path, image_name2=realselections[1].path,
-            image_name3=realselections[2].path, image_name4=realselections[3].path,
-            image_name5=hand.p2hand[0].path, image_name6=hand.p2hand[1].path,
-            image_name7=hand.p2hand[2].path, image_name8=hand.p2hand[3].path,
-            card1=score.cardsplayed[0].path, card2=score.cardsplayed[1].path,
-            card3=score.cardsplayed[2].path, card4=score.cardsplayed[3].path,
-            card5=score.cardsplayed[4].path, card6=score.cardsplayed[5].path,
-            card7=score.cardsplayed[6].path, card8=score.cardsplayed[7].path).format(
-            full.turn,
-            point.p1points, point.p2points,
-            handscores.get_var1(), handscores.get_var2(),
-            player1.pointsearned, player2.pointsearned, score.pips), 200, headers)  # building main template
-    clearplayers()
-    point.__init__()
-    if full.turn == 'player1':
-        if handscores.get_var1() >= 121:
-            full.__init__('player2', 'player1')
-            return redirect(url_for('end', winner='player 1'))
-        elif handscores.get_var2() >= 121:
-            full.__init__('player2', 'player1')
-            return redirect(url_for('end', winner='player 2'))
+        point.calculation(realselections, hand.Extra, 'p1')  # Calculation of each players points
+        point.calculation(hand.p2hand[0:4], hand.Extra, 'p2')
+        print(hand.p1hand, hand.p2hand)
+        handscores.update(point.get_var1(), point.get_var2())  # adds those scores to variable of players scores
+        page = make_response(render_template('Main_screen.html',
+                extra=hand.Extra[0].path,
+                image_name=realselections[0].path, image_name2=realselections[1].path,
+                image_name3=realselections[2].path, image_name4=realselections[3].path,
+                image_name5=hand.p2hand[0].path, image_name6=hand.p2hand[1].path,
+                image_name7=hand.p2hand[2].path, image_name8=hand.p2hand[3].path,
+                card1=score.cardsplayed[0].path, card2=score.cardsplayed[1].path,
+                card3=score.cardsplayed[2].path, card4=score.cardsplayed[3].path,
+                card5=score.cardsplayed[4].path, card6=score.cardsplayed[5].path,
+                card7=score.cardsplayed[6].path, card8=score.cardsplayed[7].path).format(
+                full.turn,
+                point.p1points, point.p2points,
+                handscores.get_var1(), handscores.get_var2(),
+                player1.pointsearned, player2.pointsearned, score.pips), 200, headers)  # building main template
+        clearplayers()
+        point.__init__()
+        if full.turn == 'player1':
+            if handscores.get_var1() >= 121:
+                full.__init__('player2', 'player1')
+                return redirect(url_for('end', winner='player 1'))
+            elif handscores.get_var2() >= 121:
+                full.__init__('player2', 'player1')
+                return redirect(url_for('end', winner='player 2'))
+            else:
+                full.__init__('player2', 'player1')
+                return page
         else:
-            full.__init__('player2', 'player1')
-            return page
+            if handscores.get_var2() >= 121:
+                full.__init__('player1', 'player2')
+                return redirect(url_for('end', winner='player 2'))
+            elif handscores.get_var1() >= 121:
+                full.__init__('player1', 'player2')
+                return redirect(url_for('end', winner='player 1'))
+            else:
+                full.__init__('player1', 'player2')
+                return page
     else:
-        if handscores.get_var2() >= 121:
-            full.__init__('player1', 'player2')
-            return redirect(url_for('end', winner='player 2'))
-        elif handscores.get_var1() >= 121:
-            full.__init__('player1', 'player2')
-            return redirect(url_for('end', winner='player 1'))
-        else:
-            full.__init__('player1', 'player2')
-            return page
+        return ''
 def keyupdate():
     global keys
     keys = {
