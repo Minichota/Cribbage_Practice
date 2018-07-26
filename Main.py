@@ -4,6 +4,7 @@ from Gameplay import player1, player2, score, clearplayers
 from flask import Flask, render_template, request, url_for, redirect, make_response
 from flask_restful import Api, Resource
 import os
+import socket
 app = Flask(__name__, template_folder=os.getcwd() + '/templates')
 api = Api(app)
 headers = {'Content-Type': 'text/html'}
@@ -48,17 +49,33 @@ def minimalplaychecker():
 @app.route('/')
 def index():
     hand.build()
-    return render_template('Card_selection.html', image_name = hand.p1hand[0].path, image_name2 = hand.p1hand[1].path,
+    return render_template('Card_selection.html',
+    image_name = hand.p1hand[0].path, image_name2 = hand.p1hand[1].path,
     image_name3 = hand.p1hand[2].path, image_name4 = hand.p1hand[3].path,
     image_name5= hand.p1hand[4].path, image_name6 = hand.p1hand[5].path)
 
 @app.route('/p1cards')
 def p1cards():
-    return '{}'.format([str(i) for i in hand.p1hand])
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    if(request.remote_addr == s.getsockname()[0]):
+        s.close()
+        return '{}'.format([str(i) for i in hand.p1hand])
 
+    else:
+        print('snoop')
+        return 'stop snooping around!'
 @app.route('/p2cards')
 def p2cards():
-    return '{}'.format([str(i) for i in hand.p2hand])
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    if(request.remote_addr == s.getsockname()[0]):
+        s.close()
+        return '{}'.format([str(i) for i in hand.p2hand])
+
+    else:
+        print('snoop')
+        return 'stop snooping around!'
 
 class end(Resource):
     def post(self):
@@ -79,8 +96,11 @@ def selections(selections):
     global realselections
     realselections = []
     for i in selections.split(','):
-        var = i.split()
-        realselections.append(Card(var[0], var[2]))
+        if i != 'favicon.ico':
+            var = i.split()
+            print(i)
+            realselections.append(Card(var[0], var[2]))
+    print(realselections)
     reset()
     if full.turn == 'player1':
         for i in range(4):
@@ -90,12 +110,11 @@ def selections(selections):
         for i in range(4):
             full.Playerturn('player2', realselections[i])
             full.Playerturn('player1', hand.p2hand[i])
-
+    keyupdate()  # refreshes key for js
     point.calculation(realselections, hand.Extra, 'p1')  # Calculation of each players points
     point.calculation(hand.p2hand[0:4], hand.Extra, 'p2')
     print(hand.p1hand, hand.p2hand)
     handscores.update(point.get_var1(), point.get_var2())  # adds those scores to variable of players scores
-    keyupdate()  # refreshes key for js
     page = make_response(render_template('Main_screen.html',
             extra=hand.Extra[0].path,
             image_name=realselections[0].path, image_name2=realselections[1].path,

@@ -128,15 +128,3 @@ class score_points:
 
 
 score = score_points()
-# if __name__ == '__main__':
-#     player1hand()
-#     player2hand()
-#     for i in range(4):
-#         print('p1:' + str(Hand.p1hand[i]))
-#         game.player1(Hand.p1hand[i])
-#         print(self.currentvalue)
-#         print('p2:' + str(Hand.p2hand[i]))
-#         game.player2(Hand.p2hand[i])
-#         print(self.currentvalue)
-#     print(player1.pointsearned, player2.pointsearned)
-#     print(score.pips)
