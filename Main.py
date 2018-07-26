@@ -98,7 +98,10 @@ def selections(selections):
     for i in selections.split(','):
         var = i.split()
         print(i)
-        realselections.append(Card(var[0], var[2]))
+        try:
+            realselections.append(Card(var[0], var[2]))
+        except IndexError:
+            pass
     print(realselections)
     reset()
     if len(realselections) > 1:
