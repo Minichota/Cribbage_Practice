@@ -96,21 +96,21 @@ def selections(selections):
     global realselections
     realselections = []
     for i in selections.split(','):
-        if i != 'favicon.ico':
-            var = i.split()
-            print(i)
-            realselections.append(Card(var[0], var[2]))
+        var = i.split()
+        print(i)
+        realselections.append(Card(var[0], var[2]))
     print(realselections)
     reset()
-    if full.turn == 'player1':
-        for i in range(4):
-            full.Playerturn('player1', realselections[i])
-            full.Playerturn('player2', hand.p2hand[i])
-    elif full.turn == 'player2':
-        for i in range(4):
-            full.Playerturn('player2', realselections[i])
-            full.Playerturn('player1', hand.p2hand[i])
-    keyupdate()  # refreshes key for js
+    if len(realselections) > 1:
+        if full.turn == 'player1':
+            for i in range(4):
+                full.Playerturn('player1', realselections[i])
+                full.Playerturn('player2', hand.p2hand[i])
+        elif full.turn == 'player2':
+            for i in range(4):
+                full.Playerturn('player2', realselections[i])
+                full.Playerturn('player1', hand.p2hand[i])
+        keyupdate()  # refreshes key for js
     point.calculation(realselections, hand.Extra, 'p1')  # Calculation of each players points
     point.calculation(hand.p2hand[0:4], hand.Extra, 'p2')
     print(hand.p1hand, hand.p2hand)
