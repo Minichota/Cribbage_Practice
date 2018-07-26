@@ -63,6 +63,7 @@ def p1cards():
         return '{}'.format([str(i) for i in hand.p1hand])
 
     else:
+        s.close()
         print('snoop')
         return 'stop snooping around!'
 @app.route('/p2cards')
