@@ -75,6 +75,7 @@ full = full_game('player1', 'player2')
 
 @app.route('/<selections>', methods=['GET', 'POST'])
 def selections(selections):
+    print(request.remote_addr)
     global realselections
     realselections = []
     for i in selections.split(','):
