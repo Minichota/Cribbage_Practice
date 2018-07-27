@@ -59,15 +59,16 @@ var choices = [];
 var count = 0;
 for(i = 0; i <6; i++){
 if (selected[i] == true){
-count += 1;
+count += 1;//checks if four are selected
 }}
 if (count == 4){
 choices = selected;
 
-for(i=0;i<6;i++){
+for(i=0;i<6;i++){//reset
 if(selected[i] == true){
 $('.'+check[i]).toggleClass('selectedIMG')
 }}
+
 selected = [false, false, false, false, false, false]
 $(location).attr('href', '/{0}'.format(choices))
 }else{
