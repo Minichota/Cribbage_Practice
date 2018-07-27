@@ -1,7 +1,6 @@
 var count = 0
 var selected = [false, false, false, false, false, false]
 var check = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6']
-var p1cards = [];
 String.prototype.format = function() {
   a = this;
   for (k in arguments) {
@@ -46,28 +45,15 @@ $(".two").replaceWith('<p class=two style="color:white">They were scored as foll
 }
 
 function select(card1){
-p1cards = [];
-var stringcards = $.ajax({
-type: 'GET',
-url: '/p1cards',
-async: false
-}).responseText;
-var disfig = stringcards.split("'");
-for(x=0;x<disfig.length;x++){
-if(disfig[x].includes("of")){
-p1cards.push(disfig[x])
-}
-}
 if (selected[check.indexOf(card1)] == false){
 selected[check.indexOf(card1)] = true;
-}
-else
-{
+}else{
 selected[check.indexOf(card1)] = false;
 }
 var updated = '.'+card1
 $(updated).toggleClass('selectedIMG');
 }
+
 function submit(){
 var choices = [];
 var count = 0;
@@ -76,17 +62,14 @@ if (selected[i] == true){
 count += 1;
 }}
 if (count == 4){
-for(i=0;i<6;i++){
-if(selected[i] == true){
-choices.push(p1cards[i]);
-}}
+choices = selected;
+
 for(i=0;i<6;i++){
 if(selected[i] == true){
 $('.'+check[i]).toggleClass('selectedIMG')
 }}
 selected = [false, false, false, false, false, false]
 $(location).attr('href', '/{0}'.format(choices))
-}
-else{
-alert('you must select 4 cards')}
-}
+}else{
+alert('you must select 4 cards')
+}}
