@@ -6,7 +6,6 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.pointsearned = 0
-        print('wow')
 
     def play_card(self, card, turn):
         score.cardsplayed.append(card)

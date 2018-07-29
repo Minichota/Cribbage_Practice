@@ -56,10 +56,11 @@ def scoreUpdate():
     clearplayers()
     for i in range(len(Played)):
         if i % 2 == 0:
-            turn = full.turn
+            turn = 'player1'
         else:
-            turn = full.otherturn
+            turn = 'player2'
         full.Playerturn(turn, Played[i])
+    print(score.cardsplayed)
     return str(player1.pointsearned) + '_' + str(player2.pointsearned) + '_' + str(score.pips)
 
 
