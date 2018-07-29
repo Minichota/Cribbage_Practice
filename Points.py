@@ -1,15 +1,16 @@
 from itertools import combinations
 from Deckdata import deck
 
-class Point_Counter:
+
+class PointCounter:
     def __init__(self):
         self.y = 0
         self.p1points = 0
         self.p2points = 0
         self.pairs = {0: 0, 4: 2, 8: 4, 9: 6, 13: 8, 16: 12}
 
-    def calculation(self, Choice, Extra, player):
-        self.choice = Choice+Extra
+    def calculation(self, choice, extra, player):
+        self.choice = choice + extra
         self.handnums = []
         self.handrealnums = []
         self.handsuits = []
@@ -60,10 +61,10 @@ class Point_Counter:
                 break
 
         self.newnums = []
-        for i in Choice:
+        for i in choice:
             self.newnums.append(i)
         for i in self.newnums:
-            if Extra[0].suit == i.suit and deck.numbers.index(i.num) == 10:
+            if extra[0].suit == i.suit and deck.numbers.index(i.num) == 10:
                 self.points += 1
         if player == 'p1':
             self.p1points += self.points
@@ -77,4 +78,5 @@ class Point_Counter:
     def get_var2(self):
         return self.p2points
 
-point = Point_Counter()
+
+point = PointCounter()

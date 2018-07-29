@@ -1,30 +1,7 @@
 from Deckdata import deck
 
 
-class Player:
-    players = []
-    def __init__(self, name):
-        self.players.append(name)
-        self.name = name
-        self.pointsearned = 0
-
-    def play_card(self, card, turn):
-        score.cardsplayed.append(card)
-        if turn == 'player1':
-            score.basic(player1, player2, card)
-        else:
-            score.basic(player2, player1, card)
-
-def clearplayers():
-    player1.__init__('player1')
-    player2.__init__('player2')
-
-
-player1 = Player('player1')
-player2 = Player('player2')
-
-
-class score_points:
+class ScorePoints:
     def __init__(self):
         self.cardsplayed = []
         self.currentcards = []
@@ -56,9 +33,7 @@ class score_points:
         if len(self.cardsplayed) == 8:
             player.pointsearned += 1
             self.pips.append(str(player.name)+' played the last card')
-        self.pairs(player)
 
-    def pairs(self, player):
         self.mybool = True
         if len(self.currentcards) > 1:
             try:
@@ -68,7 +43,7 @@ class score_points:
                     self.mybool = False
             except IndexError:
                 pass
-            if self.mybool == True:
+            if self.mybool:
                 try:
                     if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num:
                         self.pips.append(str(player.name) + ' got a pair of 3!')
@@ -76,14 +51,12 @@ class score_points:
                         self.mybool = False
                 except IndexError:
                     pass
-            if self.mybool == True:
+            if self.mybool:
                 if self.currentcards[-1].num == self.currentcards[-2].num:
                         player.pointsearned += 2
                         self.pips.append(str(player.name) + ' scored a pair of 2!')
                         self.mybool = False
-        self.flushes(player)
 
-    def flushes(self, player):
         self.newlist = []
         for i in self.currentcards:
             self.newlist.append(i.suit)
@@ -96,9 +69,7 @@ class score_points:
         if self.count >= 4:
             player.pointsearned += self.count
             self.pips.append(str(player.name) + ' scored a flush')
-        self.runs(player)
 
-    def runs(self, player):
         self.nums = []
         for card in self.currentcards:
             self.value = deck.numbers.index(card.num)+1
@@ -109,6 +80,7 @@ class score_points:
                 self.pips.append(str(player.name) + ' scored a run of ' + str(self.calculation(self.nums)))
             except TypeError:
                 pass
+
     def calculation(self, list):
         self.lengths = 0
         self.Bool = False
@@ -123,8 +95,9 @@ class score_points:
                     break
             if self.Bool:
                 return len(list) - j + 1
+
     def reset(self):
         self.__init__()
 
 
-score = score_points()
+score = ScorePoints()

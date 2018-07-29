@@ -1,5 +1,6 @@
 var count = 0
 var selected = [false, false, false, false, false, false]
+var counter = 0
 var check = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6']
 String.prototype.format = function() {
   a = this;
@@ -14,6 +15,10 @@ function myTrim(x) {
     return x;
 }
 function remove(selection){
+counter += 1;
+if(counter == 8){
+$("#div1").remove()
+counter = 0;}
 var selection = selection
 $(selection).remove();
 var List = [];
@@ -34,15 +39,13 @@ async: false
 }).responseText;
 var List2 = points.split('_')
 if (count == 0){
-$("#div5").append('<p class=one style="color:white">The score from these cards is: {0} to {1}</p>'.format(List2[0], List2[1]));
-$("#div5").append('<p class=two style="color:white">They were scored as follows: {0}</p>'.format(List2[2]))
-count += 1
-}
-else{
-$(".one").replaceWith('<p class=one style="color:white">The score from these cards is: {0} to {1}</p>'.format(List2[0], List2[1]))
-$(".two").replaceWith('<p class=two style="color:white">They were scored as follows: {0}</p>'.format(List2[2]))
-}
-}
+$("#div5").append('<p class=one style="color:white" align="middle">The score from these cards is: {0} to {1}</p>'.format(List2[0], List2[1]));
+$("#div5").append('<p class=two style="color:white" align="middle">{0}</p>'.format(List2[2]))
+count++;
+}else{
+$(".one").replaceWith('<p class=one style="color:white" align="middle">The score from these cards is: {0} to {1}</p>'.format(List2[0], List2[1]))
+$(".two").replaceWith('<p class=two style="color:white" align="middle">{0}</p>'.format(List2[2]))}}
+
 
 function select(card1){
 if (selected[check.indexOf(card1)] == false){
@@ -64,13 +67,12 @@ count += 1;//checks if four are selected
 if (count == 4){
 choices = selected;
 
-for(i=0;i<6;i++){//reset
+for(i=0;i<6;i++){        //reset
 if(selected[i] == true){
 $('.'+check[i]).toggleClass('selectedIMG')
 }}
-
 selected = [false, false, false, false, false, false]
 $(location).attr('href', '/{0}'.format(choices))
-}else{
+}else{//reset
 alert('you must select 4 cards')
 }}

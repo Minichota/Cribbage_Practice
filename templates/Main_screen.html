@@ -11,8 +11,8 @@
         The Extra card is:<br></p>
     <p style="text-align:center;"><img src="{{url_for('static', filename=extra)}}" width="50" align="center"/><br></p>
 </div>
-<div id="div1">:
-    <p style="color:white" align=left>Player ones hand is:<br>
+<div id="div1" align="top">:
+    <p style="color:white" align='top'>Player ones hand is:<br>
     <img src="{{url_for('static', filename=image_name)}}"  width="50" onclick="remove('.card1');" class="card1"/>
     <img src="{{url_for('static', filename=image_name2)}}" width="50" onclick="remove('.card2');" class="card2"/>
     <img src="{{url_for('static', filename=image_name3)}}" width="50" onclick="remove('.card3');" class="card3"/>
@@ -32,23 +32,8 @@
         <p align="center"><input type="submit" value="Next turn" name="Next turn" style="height:50px; width:200px" align="center"/></p>
     </form>
 </div>
-<div id="div4">
-    <p align=right style="color:white">Through an automatically played hand
-        <br>Player one scored {} points and Player two scored {} points<br>
-        The cards were played as follows:<br>
-        <img src="{{url_for('static', filename=card1)}}" width="50"/>
-        <img src="{{url_for('static', filename=card2)}}" width="50"/>
-        <img src="{{url_for('static', filename=card3)}}" width="50"/>
-        <img src="{{url_for('static', filename=card4)}}" width="50"/>
-        <img src="{{url_for('static', filename=card5)}}" width="50"/>
-        <img src="{{url_for('static', filename=card6)}}" width="50"/>
-        <img src="{{url_for('static', filename=card7)}}" width="50"/>
-        <img src="{{url_for('static', filename=card8)}}" width="50"/><br>
-        Points were scored as follows: {}</p>
-</div>
 <div id="div5">
-    <p align="left" style="color:white" class="para">
-        The cards you have selected to be played so far are:
+    <p align="center" style="color:white" class="para">
     </p>
 </div>
 </body>
