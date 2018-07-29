@@ -90,22 +90,21 @@ def selection(selections):
     global player1Choices
     player1Choices = []
     crib = []
-    reset()
     temp = selections.split(',')
     for i in range(len(temp)):
         if temp[i] == 'true':
             player1Choices.append(player1.hand[i])
         else:
             crib.append(player1.hand[i])
-
-    if full.turn == 'player1':
-        for i in range(4):
-            full.Playerturn('player1', player1Choices[i])
-            full.Playerturn('player2', player2.hand[i])
-    elif full.turn == 'player2':
-        for i in range(4):
-            full.Playerturn('player2', player1Choices[i])
-            full.Playerturn('player1', player2.hand[i])
+    reset()
+    # if full.turn == 'player1':
+    #     for i in range(4):
+    #         full.Playerturn('player1', player1Choices[i])
+    #         full.Playerturn('player2', player2.hand[i])
+    # elif full.turn == 'player2':
+    #     for i in range(4):
+    #         full.Playerturn('player2', player2.hand[i])
+    #         full.Playerturn('player1', player1Choices[i])
 
     update()  # refreshes key for js
     point.calculation(player1Choices, deck.Extra, 'p1')  # Calculation of each players points

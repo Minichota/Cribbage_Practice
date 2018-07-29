@@ -3,12 +3,10 @@ from Deckdata import deck
 
 
 class Player:
-    players = []
-
     def __init__(self, name):
-        self.players.append(name)
         self.name = name
         self.pointsearned = 0
+        print('wow')
 
     def play_card(self, card, turn):
         score.cardsplayed.append(card)
@@ -25,11 +23,9 @@ class Player:
 
 
 def clearplayers():
-    for i in Player.players:
-        i.__init__()
+    player1.__init__('player1')
+    player2.__init__('player2')
 
 
 player1 = Player('player1')
-Player.players.append('player1')
 player2 = Player('player2')
-Player.players.append('player2')

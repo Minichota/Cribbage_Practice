@@ -9,6 +9,7 @@ class ScorePoints:
         self.currentvalue = 0
 
     def basic(self, player, otherplayer, selection):
+        print(self.cardsplayed)
         value = deck.numbers.index(selection.num)+1
         if value > 10:
             value = 10
@@ -33,7 +34,9 @@ class ScorePoints:
         if len(self.cardsplayed) == 8:
             player.pointsearned += 1
             self.pips.append(str(player.name)+' played the last card')
+        self.pairs(player)
 
+    def pairs(self, player):
         self.mybool = True
         if len(self.currentcards) > 1:
             try:
@@ -43,7 +46,7 @@ class ScorePoints:
                     self.mybool = False
             except IndexError:
                 pass
-            if self.mybool:
+            if self.mybool == True:
                 try:
                     if self.currentcards[-1].num == self.currentcards[-2].num == self.currentcards[-3].num:
                         self.pips.append(str(player.name) + ' got a pair of 3!')
@@ -51,12 +54,14 @@ class ScorePoints:
                         self.mybool = False
                 except IndexError:
                     pass
-            if self.mybool:
+            if self.mybool == True:
                 if self.currentcards[-1].num == self.currentcards[-2].num:
                         player.pointsearned += 2
                         self.pips.append(str(player.name) + ' scored a pair of 2!')
                         self.mybool = False
+        self.flushes(player)
 
+    def flushes(self, player):
         self.newlist = []
         for i in self.currentcards:
             self.newlist.append(i.suit)
@@ -69,7 +74,9 @@ class ScorePoints:
         if self.count >= 4:
             player.pointsearned += self.count
             self.pips.append(str(player.name) + ' scored a flush')
+        self.runs(player)
 
+    def runs(self, player):
         self.nums = []
         for card in self.currentcards:
             self.value = deck.numbers.index(card.num)+1
