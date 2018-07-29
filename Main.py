@@ -113,7 +113,9 @@ def selection(selections):
 
     print(player1.hand, player2.hand)
     handScores.update(point.get_var1(), point.get_var2())  # Adds those scores to variable of players scores
-
+    if len(score.cardsplayed) == 8:
+        handScores.update(player1.pointsearned, player2.pointsearned)
+    print(score.currentcards)
     page = make_response(render_template('Main_screen.html',
                                          extra=deck.Extra[0].path,
                                          image_name=player1Choices[0].path, image_name2=player1Choices[1].path,

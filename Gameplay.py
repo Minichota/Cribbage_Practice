@@ -10,7 +10,6 @@ class ScorePoints:
 
     def basic(self, player, otherplayer, selection):
         self.resetter = False
-        self.g = False
         value = deck.numbers.index(selection.num)+1
         if value > 10:
             value = 10
@@ -23,12 +22,12 @@ class ScorePoints:
             if self.currentvalue == 31:
                 player.pointsearned += 2
                 self.resetter = True
-                self.pips.append(str(player.name) + ' scored a 31!')
             self.currentcards.append(selection)
         else:
-            self.resetter = True
+            self.currentvalue = 0
+            self.currentcards = []
             otherplayer.pointsearned += 1
-            self.g = True
+            self.currentcards.append(selection)
             self.pips.append(str(otherplayer.name) + " got go'd")
         self.pairs(player, otherplayer, selection)
 
@@ -104,15 +103,11 @@ class ScorePoints:
         if self.resetter == True:
             self.currentvalue = 0
             self.currentcards = []
-        if self.g == True:
-            value = deck.numbers.index(selection.num) + 1
-            if value > 10:
-                value = 10
-            self.currentvalue += value
-            self.currentcards.append(selection)
+            self.pips.append(str(player.name) + ' scored a 31!')
         if len(self.cardsplayed) == 8:
             player.pointsearned += 1
             self.pips.append(str(player.name) + ' played the last card')
+
     def reset(self):
         self.__init__()
 
