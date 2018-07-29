@@ -18,7 +18,7 @@ function remove(selection){
 counter += 1;
 if(counter == 8){
 $("#div1").remove()
-counter = 0;}
+}
 var selection = selection
 $(selection).remove();
 var List = [];
@@ -44,9 +44,14 @@ $("#div5").append('<p class=two style="color:white" align="middle">{0}</p>'.form
 count++;
 }else{
 $(".one").replaceWith('<p class=one style="color:white" align="middle">The score from these cards is: {0} to {1}</p>'.format(List2[0], List2[1]))
-$(".two").replaceWith('<p class=two style="color:white" align="middle">{0}</p>'.format(List2[2]))}}
+$(".two").replaceWith('<p class=two style="color:white" align="middle">{0}</p>'.format(List2[2]))}
+if(counter == 8){
+var one = Number(List2[0]) + Number(List2[3]);
+var two = Number(List2[1]) + Number(List2[4]);
 
-
+$('#div3').replaceWith('<p style="color:white" align="center">The new score is {0} to {1}</p> <form method="get" action="/"><p align="center"><input type="submit" value="Next turn" name="Next turn" style="height:50px; width:200px" align="center"/></p></form>'.format(one, two))
+counter = 0;
+}}
 function select(card1){
 if (selected[check.indexOf(card1)] == false){
 selected[check.indexOf(card1)] = true;

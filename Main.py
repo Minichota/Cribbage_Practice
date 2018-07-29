@@ -61,7 +61,10 @@ def scoreUpdate():
             turn = 'player2'
         full.Playerturn(turn, Played[i])
     print(score.cardsplayed)
-    return str(player1.pointsearned) + '_' + str(player2.pointsearned) + '_' + str(score.pips)
+    if len(score.cardsplayed) == 8:
+        handScores.update(player1.pointsearned, player2.pointsearned)
+    return str(player1.pointsearned) + '_' + str(player2.pointsearned) + '_' + str(score.pips) + '_' + \
+           str(temp1) + '_' + str(temp2)
 
 
 @app.route('/')
@@ -88,34 +91,24 @@ full = Game('player1', 'player2')
 
 @app.route('/<selections>', methods=['GET', 'POST'])
 def selection(selections):
-    global player1Choices
+    global player1Choices, temp1, temp2
     player1Choices = []
     crib = []
-    temp = selections.split(',')
-    for i in range(len(temp)):
-        if temp[i] == 'true':
+    selections = selections.split(',')
+    for i in range(len(selections)):
+        if selections[i] == 'true':
             player1Choices.append(player1.hand[i])
         else:
             crib.append(player1.hand[i])
     reset()
-    # if full.turn == 'player1':
-    #     for i in range(4):
-    #         full.Playerturn('player1', player1Choices[i])
-    #         full.Playerturn('player2', player2.hand[i])
-    # elif full.turn == 'player2':
-    #     for i in range(4):
-    #         full.Playerturn('player2', player2.hand[i])
-    #         full.Playerturn('player1', player1Choices[i])
-
     update()  # refreshes key for js
     point.calculation(player1Choices, deck.Extra, 'p1')  # Calculation of each players points
     point.calculation(player2.hand[0:4], deck.Extra, 'p2')
 
     print(player1.hand, player2.hand)
     handScores.update(point.get_var1(), point.get_var2())  # Adds those scores to variable of players scores
-    if len(score.cardsplayed) == 8:
-        handScores.update(player1.pointsearned, player2.pointsearned)
-    print(score.currentcards)
+
+    temp1, temp2 = handScores.get_var1(), handScores.get_var2()
     page = make_response(render_template('Main_screen.html',
                                          extra=deck.Extra[0].path,
                                          image_name=player1Choices[0].path, image_name2=player1Choices[1].path,
