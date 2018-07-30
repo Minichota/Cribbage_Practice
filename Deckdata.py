@@ -31,9 +31,14 @@ class Scoring:
         self.p1score = 0
         self.p2score = 0
 
-    def update(self, p1scored, p2scored):
+    def update(self, p1scored, p2scored, *args):
         self.p1score += p1scored
         self.p2score += p2scored
+        if len(args) > 0:
+            if args[1] == 'player1':
+                self.p1score += args[0]
+            elif args[1] == 'player2':
+                self.p2score += args[0]
         return p1scored, p2scored
 
     def get_var1(self):
@@ -44,6 +49,18 @@ class Scoring:
 
     def reset(self):
         self.__init__()
+
+
+class Crib:
+    def __init__(self, owner, crib):
+        self.points = 0
+        self.owner = owner
+        self.crib = crib
+
+    def score(self):
+        from Points import PointCounter
+        pointer = PointCounter()
+        self.points += pointer.crib(self.crib)
 
 
 deck = Deck()

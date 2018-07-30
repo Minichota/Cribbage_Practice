@@ -7,7 +7,7 @@
 <script src="static/script.js"></script>
 <body background="static/background.jpg">
 <div id="div0">
-    <p style="color:white" align="center">It is currently {}'s turn<br>
+    <p style="color:white" align="center">It is currently player {}'s turn<br>
         The Extra card is:<br></p>
     <p style="text-align:center;"><img src="{{url_for('static', filename=extra)}}" width="50" align="center"/><br></p>
 </div>
@@ -34,6 +34,16 @@
 </div>
 <div id="div5">
     <p align="center" style="color:white" class="para">
+    </p>
+</div>
+<div id="div6">
+    <p align="center" style="color:white">
+        Player {}'s crib<br>
+        <img src="{{url_for('static', filename=crib1)}}" width="50"/>
+        <img src="{{url_for('static', filename=crib2)}}" width="50"/>
+        <img src="{{url_for('static', filename=crib3)}}" width="50"/>
+        <img src="{{url_for('static', filename=crib4)}}" width="50"/><br>
+        This is worth {} points
     </p>
 </div>
 </body>
