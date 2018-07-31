@@ -1,6 +1,8 @@
 from Gameplay import score
 from Deckdata import deck
 
+players = []
+
 
 class Player:
     def __init__(self, name):
@@ -22,9 +24,11 @@ class Player:
 
 
 def clearplayers():
-    player1.__init__('player1')
-    player2.__init__('player2')
+    for i in players:
+        i.__init__(i.name)
 
 
 player1 = Player('player1')
+players.append(player1)
 player2 = Player('player2')
+players.append(player2)

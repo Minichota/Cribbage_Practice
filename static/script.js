@@ -48,8 +48,14 @@ $(".two").replaceWith('<p class=two style="color:white" align="middle">{0}</p>'.
 if(counter == 8){
 var one = Number(List2[0]) + Number(List2[3]);
 var two = Number(List2[1]) + Number(List2[4]);
-
+var three = List2[6].replace('[', '').replace(']', '').split(', ')
+for(i=0;i<4;i++){
+three[i] = three[i].replace(' ', '_').replace(' ', '_').toLowerCase() + '.png'
+}
+console.log(List2)
+console.log(three)
 $('#div3').replaceWith('<p style="color:white" align="center">The new score is {0} to {1}</p> <form method="get" action="/"><p align="center"><input type="submit" value="Next turn" name="Next turn" style="height:50px; width:200px" align="center"/></p></form>'.format(one, two))
+$('.second').replaceWith("<p align='center' style='color:white' class='second'><img src='/static/{0}' width='50'/><img src='/static/{1}' width='50'/><img src='/static/{2}' width='50'/><img src='/static/{3}' width='50'/><br>This is worth {4} points</p>".format(three[0], three[1], three[2], three[3], List2[5]))
 counter = 0;
 }}
 function select(card1){
