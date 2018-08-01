@@ -30,7 +30,6 @@ class Scoring:
     def __init__(self):
         self.p1score = 0
         self.p2score = 0
-
     def update(self, p1scored, p2scored, *args):
         self.p1score += p1scored
         self.p2score += p2scored

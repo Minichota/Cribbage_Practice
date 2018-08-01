@@ -58,12 +58,6 @@ def play(card):
 
 @app.route('/image_movement2')
 def scoreUpdate():
-    if len(Played) == 8:
-        score.reset()
-        clearplayers()
-        handScores.update(player1.pointsearned, player2.pointsearned, crib.points, temp)
-
-    temp1, temp2 = handScores.p1score, handScores.p2score
     score.reset()
     clearplayers()
 
@@ -73,10 +67,20 @@ def scoreUpdate():
         else:
             turn = 'player2'
         full.playerturn(turn, Played[i])
-    return str(player1.pointsearned) + '_' + str(player2.pointsearned) + '_' + str(score.pips) + '_' + \
-           str(temp1) + '_' + str(temp2) + '_' + str(crib.points) + '_' + str(crib_cards) + '_' + \
-           str(full.turn.strip('player'))
+    if len(Played) == 8:
+        handScores.update(player1.pointsearned, player2.pointsearned, crib.points, temp)
+        tempx = score.pips
+        reset()
 
+        return str(player1.pointsearned) + '_' + str(player2.pointsearned) + '_' + str(tempx) + '_' + \
+               str(handScores.p1score) + '_' + str(handScores.p2score) + '_' + str(crib.points) + '_' + str(
+            crib_cards) + '_' + \
+               str(full.otherturn.strip('player'))
+    else:
+        return str(player1.pointsearned) + '_' + str(player2.pointsearned) + '_' + str(score.pips) + '_' + \
+               str(handScores.p1score) + '_' + str(handScores.p2score) + '_' + str(crib.points) + '_' + str(
+            crib_cards) + '_' + \
+               str(full.otherturn.strip('player'))
 
 @app.route('/')
 def index():
@@ -114,7 +118,6 @@ def selection(selections):
             crib_cards.append(player1.hand[i])
             crib_cards.append(player2.hand[i])
 
-    reset()
     update()  # refreshes key for js
 
     point1 = PointCounter(player1Choices)
