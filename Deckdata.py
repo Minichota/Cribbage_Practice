@@ -27,9 +27,10 @@ class Deck:
 
 
 class Scoring:
-    def __init__(self):
-        self.p1score = 0
-        self.p2score = 0
+    def __init__(self, p1score, p2score):
+        self.p1score = p1score
+        self.p2score = p2score
+
     def update(self, p1scored, p2scored, *args):
         self.p1score += p1scored
         self.p2score += p2scored
@@ -37,13 +38,11 @@ class Scoring:
         if len(args) > 0:
             if args[1] == 'player1':
                 self.p1score += args[0]
-                print('1')
             if args[1] == 'player2':
                 self.p2score += args[0]
-                print('2')
 
     def reset(self):
-        self.__init__()
+        self.__init__(0, 0)
 
 
 class Crib:
@@ -59,4 +58,3 @@ class Crib:
 
 
 deck = Deck()
-handScores = Scoring()

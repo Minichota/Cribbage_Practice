@@ -1,21 +1,50 @@
 from Points import PointCounter
-from Deckdata import handScores, deck, Crib
-from Gameplay import score
+from Deckdata import deck, Crib, Scoring
+from Gameplay import gameplay
 from Player import player1, player2, clearplayers
 from flask import Flask, render_template, request, url_for, redirect, make_response
 from flask_restful import Api, Resource
+from random import randint
 import os
-
+import sqlite3
 app = Flask(__name__, template_folder=os.getcwd() + '/templates')
 api = Api(app)
 headers = {'Content-Type': 'text/html'}
 Played = []
 
 
+def check_for_session(ip):
+    global sessionID
+    conn = sqlite3.connect('Session.db')
+    c = conn.cursor()
+    for i in c.execute("SELECT IP, sessionID FROM sessions"):
+        if ip == i[0]:
+            sessionID = i[1]
+            return False
+
+
+@app.route('/new_session')
+def create_session():
+    global c, conn, sessionID
+    conn = sqlite3.connect('Session.db')
+    c = conn.cursor()
+    int = randint(10000000, 99999999)
+    sessionID = int
+    print(request.remote_addr)
+    if check_for_session(request.remote_addr) != False:
+        c.execute("INSERT OR IGNORE INTO sessions(sessionID, player1score, player2score, IP) VALUES(?, ?, ?, ?)",
+                  (int, 0, 0, request.remote_addr))
+        conn.commit()
+    else:
+        pass
+    print(sessionID)
+    return redirect('/')
+
+
 def reset():
     global Played
     Played = []
-    score.reset()
+    gameplay.reset()
 
 
 def update():
@@ -32,21 +61,32 @@ def update():
 
 
 class Game:
-    def __init__(self, turn, otherturn):
+    def __init__(self, turn, other_turn):
         self.turn = turn
-        self.otherturn = otherturn
+        self.other_turn = other_turn
 
-    def playerturn(self, playersturn, cardselected):
-        if playersturn == 'player1':
-            player1.play_card(cardselected, playersturn)
-        if playersturn == 'player2':
-            player2.play_card(cardselected, playersturn)
+    def player_turn(self, players_turn, card_selected):
+        if players_turn == 'player1':
+            player1.play_card(card_selected, players_turn)
+        if players_turn == 'player2':
+            player2.play_card(card_selected, players_turn)
 
+    
     def switch(self):
-        self.turn, self.otherturn = self.otherturn, self.turn
+        self.turn, self.other_turn = self.other_turn, self.turn
 
 
 full = Game('player1', 'player2')
+
+
+@app.route('/sessionID')
+def sessionID():
+    return str(sessionID)
+
+
+@app.route('/favicon.ico')
+def icon():
+    return 'LOGO_icon.ico'
 
 
 @app.route('/image_movement/<card>')
@@ -58,29 +98,33 @@ def play(card):
 
 @app.route('/image_movement2')
 def scoreUpdate():
-    score.reset()
+    conn = sqlite3.connect('Session.db')
+    c = conn.cursor()
+    gameplay.reset()
     clearplayers()
-
     for i in range(len(Played)):
         if i % 2 == 0:
             turn = 'player1'
         else:
             turn = 'player2'
-        full.playerturn(turn, Played[i])
+        full.player_turn(turn, Played[i])
+
     if len(Played) == 8:
-        handScores.update(player1.pointsearned, player2.pointsearned, crib.points, temp)
-        tempx = score.pips
+        crib = Crib(full.turn, crib_cards)  # Calculation of crib points
+        crib.score()
+        handScores.update(player1.points_earned, player2.points_earned, crib.points, temp)
+        c.execute("UPDATE sessions SET player1score = ? WHERE IP = ?", (handScores.p1score, request.remote_addr,))
+        c.execute("UPDATE sessions SET player2score = ? WHERE IP = ?", (handScores.p2score, request.remote_addr,))
+        conn.commit()
+        pips = gameplay.pips
         reset()
 
-        return str(player1.pointsearned) + '_' + str(player2.pointsearned) + '_' + str(tempx) + '_' + \
-               str(handScores.p1score) + '_' + str(handScores.p2score) + '_' + str(crib.points) + '_' + str(
-            crib_cards) + '_' + \
-               str(full.otherturn.strip('player'))
+        return str(player1.points_earned) + '_' + str(player2.points_earned) + '_' + str(pips) + '_' + \
+               str(handScores.p1score) + '_' + str(handScores.p2score) + '_' + str(crib.points) + '_' + str(crib_cards) \
+               + '_' + str(full.other_turn.strip('player'))
     else:
-        return str(player1.pointsearned) + '_' + str(player2.pointsearned) + '_' + str(score.pips) + '_' + \
-               str(handScores.p1score) + '_' + str(handScores.p2score) + '_' + str(crib.points) + '_' + str(
-            crib_cards) + '_' + \
-               str(full.otherturn.strip('player'))
+        return str(player1.points_earned) + '_' + str(player2.points_earned) + '_' + str(gameplay.pips) + '_' + \
+               str(handScores.p1score) + '_' + str(handScores.p2score)
 
 @app.route('/')
 def index():
@@ -94,16 +138,29 @@ def index():
 
 class End(Resource):
     def get(self):
+        conn = sqlite3.connect('Session.db')
+        c = conn.cursor()
         winner = request.args['winner']
         score1 = handScores.p1score
         score2 = handScores.p2score
+        c.execute("UPDATE sessions SET player1score = ? WHERE IP = ?", (0, request.remote_addr,))
+        c.execute("UPDATE sessions SET player2score = ? WHERE IP = ?", (0, request.remote_addr,))
+        conn.commit()
         handScores.reset()
         return make_response(render_template('End.html').format(winner, score1, score2, full.turn), 200, headers)
 
 
-@app.route('/<selections>', methods=['GET', 'POST'])
-def selection(selections):
-    global player1Choices, player2Choices, full, page, crib, crib_cards, temp
+@app.route('/<selections>/<int:sessionID>', methods=['GET', 'POST'])
+def selection(selections, sessionID):
+    global player1Choices, player2Choices, full, page, crib_cards, temp, handScores
+    conn = sqlite3.connect('Session.db')
+    c = conn.cursor()
+    print(sessionID)
+    print(str(request.remote_addr))
+    ip = request.remote_addr
+    print(ip)
+    for i in c.execute("SELECT * FROM sessions WHERE IP = ?", (ip,)):
+        handScores = Scoring(i[1], i[2])
     player1Choices = []
     player2Choices = []
     crib_cards = []
@@ -119,17 +176,16 @@ def selection(selections):
             crib_cards.append(player2.hand[i])
 
     update()  # refreshes key for js
-
     point1 = PointCounter(player1Choices)
     p1_points = point1.calculation()  # Calculation of each players points
     point2 = PointCounter(player2Choices)
     p2_points = point2.calculation()
 
-    crib = Crib(full.turn, crib_cards)  # Calculation of crib points
-    crib.score()
-
     handScores.update(p1_points, p2_points)
-
+    print(handScores.p1score, handScores.p2score)
+    c.execute("UPDATE sessions SET player1score = ? WHERE IP = ?", (handScores.p1score, ip,))
+    c.execute("UPDATE sessions SET player2score = ? WHERE IP = ?", (handScores.p2score, ip,))
+    conn.commit()
     page = make_response(render_template('Main_screen.html',
                                          extra=deck.Extra[0].path,
                                          image_name=player1Choices[0].path, image_name2=player1Choices[1].path,
@@ -140,6 +196,7 @@ def selection(selections):
         p1_points, p2_points,
         handScores.p1score, handScores.p2score,
         full.turn.strip('player')), 200, headers)  # building main template
+
     deck.shuffle()
     clearplayers()
     # Checking to see if anyone won
@@ -166,5 +223,14 @@ def check():
 
 
 api.add_resource(End, '/end')
+
 if __name__ == '__main__':
+    conn = sqlite3.connect('Session.db')
+    c = conn.cursor()
+    try:
+        c.execute(
+            "CREATE TABLE sessions(sessionID int, player1score int, player2score int, IP TEXT, UNIQUE(sessionID, player1score, player2score, IP))")
+        conn.commit()
+    except sqlite3.OperationalError:
+        pass
     app.run(host='0.0.0.0', port=80, debug=False)
