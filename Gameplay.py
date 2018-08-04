@@ -53,7 +53,7 @@ class ScorePoints:
             if my_bool:
                 if self.current_cards[-1].num == self.current_cards[-2].num:
                     player.points_earned += 2
-                        self.pips.append(str(player.name) + ' scored a pair of 2!')
+                    self.pips.append(str(player.name) + ' scored a pair of 2!')
         self.runs(player)
 
     def runs(self, player):
