@@ -21,7 +21,6 @@ counter += 1;
 if(counter == 8){
 $("#div1").remove()
 }
-var selection = selection
 $(selection).remove();
 var List = [];
 List.push($.ajax({
@@ -59,7 +58,7 @@ for(i=0;i<4;i++){
 three[i] = '../static/'+three[i].replace(' ', '_').replace(' ', '_').toLowerCase() + '.png'
 console.log(three[i])
 }
-$('#div3').replaceWith('<p style="color:white" align="center">The new score is {0} to {1}</p><p style="color:white" align="center">Player {2}\'s crib: {3} points<br>Score from play: {4} points<br>Original score: {5}</p> <form method="get" action="/"><p align="center"><input type="submit" value="Next turn" name="Next turn" style="height:50px; width:200px" align="center"/></p></form>'.format(one, two, List2[7], List2[5], [List2[0] +' and '+ List2[1]], [temp1+' to '+ temp2]))
+    $('#div3').replaceWith('<p style="color:white" align="center">The new score is {0} to {1}</p><p style="color:white" align="center">Player {2}\'s crib: {3} points<br>Score from play: {4} points<br>Original score: {5}</p> <form method="get" action="/cardselect"><p align="center"><input type="submit" value="Next turn" name="Next turn" style="height:50px; width:200px" align="center"/></p></form>'.format(one, two, List2[7], List2[5], [List2[0] + ' and ' + List2[1]], [temp1 + ' to ' + temp2]))
 $('.second').replaceWith("<p align='center' style='color:white' class='second'><img src='/static/{0}' width='50'/><img src='/static/{1}' width='50'/><img src='/static/{2}' width='50'/><img src='/static/{3}' width='50'/><br>This is worth {4} points</p>".format(three[0], three[1], three[2], three[3], List2[5]))
 counter = 0;
 }}

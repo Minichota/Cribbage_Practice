@@ -20,7 +20,7 @@ def check_for_session(ip):
     for i in c.execute("SELECT IP, sessionID FROM sessions"):
         if ip == i[0]:
             sessionID = i[1]
-            return False
+            return True
 
 
 @app.route('/new_session')
@@ -29,16 +29,19 @@ def create_session():
     conn = sqlite3.connect('Session.db')
     c = conn.cursor()
     int = randint(10000000, 99999999)
-    sessionID = int
     print(request.remote_addr)
-    if check_for_session(request.remote_addr) != False:
+    if check_for_session(request.remote_addr) != True:
         c.execute("INSERT OR IGNORE INTO sessions(sessionID, player1score, player2score, IP) VALUES(?, ?, ?, ?)",
                   (int, 0, 0, request.remote_addr))
         conn.commit()
     else:
         pass
+    for i in c.execute("SELECT sessionID FROM sessions WHERE IP = ?", (request.remote_addr,)):
+        sessionID = i[0]
+        print(i[0])
+        break
     print(sessionID)
-    return redirect('/')
+    return redirect('/cardselect')
 
 
 def reset():
@@ -126,7 +129,8 @@ def scoreUpdate():
         return str(player1.points_earned) + '_' + str(player2.points_earned) + '_' + str(gameplay.pips) + '_' + \
                str(handScores.p1score) + '_' + str(handScores.p2score)
 
-@app.route('/')
+
+@app.route('/cardselect')
 def index():
     player1.build('1')
     player2.build('2')
