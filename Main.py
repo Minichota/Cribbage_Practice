@@ -23,7 +23,7 @@ def check_for_session(ip):
             return True
 
 
-@app.route('/new_session')
+@app.route('/')
 def create_session():
     global c, conn, sessionID
     conn = sqlite3.connect('Session.db')
@@ -96,7 +96,9 @@ def icon():
 def play(card):
     card = card.strip('.')
     Played.append(keys[card])
-    return str(keys[card])
+    card2 = 'card' + str(int(card.strip('card')) + 4)
+    Played.append(keys[card2])
+    return str(keys[card]) + '/' + str(keys[card2])
 
 
 @app.route('/image_movement2')
@@ -160,7 +162,6 @@ def selection(selections, sessionID):
     conn = sqlite3.connect('Session.db')
     c = conn.cursor()
     print(sessionID)
-    print(str(request.remote_addr))
     ip = request.remote_addr
     print(ip)
     for i in c.execute("SELECT * FROM sessions WHERE IP = ?", (ip,)):
@@ -193,11 +194,9 @@ def selection(selections, sessionID):
     page = make_response(render_template('Main_screen.html',
                                          extra=deck.Extra[0].path,
                                          image_name=player1Choices[0].path, image_name2=player1Choices[1].path,
-                                         image_name3=player1Choices[2].path, image_name4=player1Choices[3].path,
-                                         image_name5=player2Choices[0].path, image_name6=player2Choices[1].path,
-                                         image_name7=player2Choices[2].path, image_name8=player2Choices[3].path).format(
+                                         image_name3=player1Choices[2].path, image_name4=player1Choices[3].path).format(
         full.turn.strip('player'),
-        p1_points, p2_points,
+        p1_points,
         handScores.p1score, handScores.p2score,
         full.turn.strip('player')), 200, headers)  # building main template
 
