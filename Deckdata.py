@@ -1,5 +1,9 @@
 import random
+from flask import request
+import sqlite3
 
+c = sqlite3.connect('Session.db', check_same_thread=False)
+d = c.cursor()
 
 class Card:
     def __init__(self, num, suit):
@@ -10,6 +14,12 @@ class Card:
     def __repr__(self):
         return self.num + " of " + self.suit
 
+    def serialize(self):
+        return {
+            'num': self.num,
+            'suit': self.suit,
+            'path': self.path,
+        }
 
 class Deck:
     def __init__(self):
@@ -20,10 +30,13 @@ class Deck:
             for number in self.numbers:
                 self.deck.append(Card(number, suit))
         self.shuffle()
+        self.Extra = [self.deck[12]]
+
+    def set_extra(self):
+        self.Extra = [self.deck[12]]
 
     def shuffle(self):
         random.shuffle(self.deck)
-        self.Extra = [self.deck[12]]
 
 
 class Scoring:
@@ -46,14 +59,15 @@ class Scoring:
 
 
 class Crib:
-    def __init__(self, owner, crib):
+    def __init__(self, crib):
         self.points = 0
-        self.owner = owner
+        self.owner = list(d.execute("SELECT turn FROM sessions WHERE IP = ?", (request.remote_addr,)))[0]
+        print(self.owner)
         self.crib = crib
 
     def score(self):
         from Points import PointCounter
-        pointer = PointCounter(self.crib)
+        pointer = PointCounter(self.crib, True)
         self.points += pointer.crib()
 
 

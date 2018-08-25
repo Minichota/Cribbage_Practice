@@ -10,7 +10,7 @@ class ScorePoints:
 
     def basic(self, player, other_player, selection):
         self.resetter = False
-        value = deck.numbers.index(selection.num)+1
+        value = deck.numbers.index(selection.num) + 1
         if value > 10:
             value = 10
         if self.current_value + value <= 31:
@@ -63,13 +63,13 @@ class ScorePoints:
             nums.append(value)
         if len(nums) > 2:
             try:
-                player.points_earned += self.calculation(nums)
-                self.pips.append(str(player.name) + ' scored a run of ' + str(self.calculation(nums)))
+                player.points_earned += self.calculation_runs(nums)
+                self.pips.append(str(player.name) + ' scored a run of ' + str(self.calculation_runs(nums)))
             except TypeError:
                 pass
         self.end(player)
 
-    def calculation(self, nums):
+    def calculation_runs(self, nums):
         for j in range(1, len(nums) - 1):
             done = False
             new = sorted(nums[-len(nums) + j - 1:])

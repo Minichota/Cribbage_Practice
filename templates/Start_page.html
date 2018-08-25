@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="/static/LOGO_icon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        function new_session() {
+            $(location).attr('href', '/new_session');
+        }
+
+        function cont() {
+            $(location).attr('href', '/check_for_game')
+        }
+    </script>
+    <style>
+        .bottom {
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .top {
+            position: fixed;
+            top: 0;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body background="../static/background.jpg">
+<div id="div1" class="top">
+    <p style="color:white" align="center"><font size="10">Create new game, this will remove any previous sessions you
+        have</font></p>
+    <p align="center">
+        <button style="height:100px; width:400px" onclick="new_session()"><font size="15">New game!</font>
+        </button>
+    </p>
+</div>
+<div id="div2" class="bottom">
+    <p style="color:white" align="center"><font size="10">Continue game</font></p>
+    <p align="center">
+        <button style="height:100px; width:400px" onclick="cont()"><font size="15">Continue!</font>
+        </button>
+    </p>
+</div>
+</body>
+</html>

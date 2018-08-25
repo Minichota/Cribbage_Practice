@@ -5,36 +5,47 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../static/script.js"></script>
 </head>
-<body background="../static/background.jpg">
+<body background="../static/background.jpg" onload="initialize();">
 <div id="div0">
-    <p style="color:white" align="center">It is currently player {}'s turn<br>
-        The Extra card is:<br></p>
-    <p style="text-align:center;"><img src="{{url_for('static', filename=extra)}}" width="50" align="center"/><br></p>
+    <p style="color:white; position: fixed; text-align: center; top: 500px; width: 100%"><font size="5">It is currently
+        player {}'s turn<br>
+        The Extra card is:</font><br>
+        <img src="{{url_for('static', filename=extra)}}" width="60" align="center"/><br></p>
 </div>
-<div id="div1" align="top">:
-    <p style="color:white" align='top'>Player ones hand is:<br>
-    <img src="{{url_for('static', filename=image_name)}}"  width="50" onclick="remove('.card1');" class="card1"/>
-    <img src="{{url_for('static', filename=image_name2)}}" width="50" onclick="remove('.card2');" class="card2"/>
-    <img src="{{url_for('static', filename=image_name3)}}" width="50" onclick="remove('.card3');" class="card3"/>
-    <img src="{{url_for('static', filename=image_name4)}}" width="50" onclick="remove('.card4');" class="card4"/><br>
-    This is worth: {} points<br></p>
-    <p style="color:white" align=right>Player twos hand is:<br>
+<div id="div1">:
+    <p style="color:white;
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            width: 100%;" class="p1"><font size="8">Your hand</font><br>
+        <img src="{{url_for('static', filename=image_name)}}" width="80" onclick="remove('.card1');" class="card1"/>
+        <img src="{{url_for('static', filename=image_name2)}}" width="80" onclick="remove('.card2');" class="card2"/>
+        <img src="{{url_for('static', filename=image_name3)}}" width="80" onclick="remove('.card3');" class="card3"/>
+        <img src="{{url_for('static', filename=image_name4)}}" width="80" onclick="remove('.card4');"
+             class="card4"/><br>
+        <font size="8">This is worth: {} points</font><br></p>
+    <p style="color:white;
+            position: fixed;
+            top: 0;
+            text-align: center;
+            width: 100%" class="p2">Your enemy's hand<br>
         <img src="/static/back.png" width="50" class="card5"/>
         <img src="/static/back.png" width="50" class="card6"/>
         <img src="/static/back.png" width="50" class="card7"/>
         <img src="/static/back.png" width="50" class="card8"/><br>
 </div>
 <div id="div3">
-    <p style="color:white" align="center">The new score is {} to {}</p>
+    <p style="color:white; top: 200px; position:fixed; width: 100%; text-align: center"><font size="5">The score is {}
+        to {}</font></p>
 </div>
 <div id="div5">
-    <p align="center" style="color:white" class="para">
+    <p align="center" style="color:white; position:fixed; text-align: center; width: 100%; top:240px" class="para">
     </p>
 </div>
 <div id="div6">
-    <p align="center" style="color:white" class="first">
-        Player {}'s crib<br></p>
-    <p align="center" style="color:white" class="second">
+    <p align="center" style="color:white; top: 370px; position: fixed; text-align: center; width: 100%" class="first">
+        <font size="5">Player {}'s crib</font><br></p>
+    <p align="center" style="color:white; top: 400px; position: fixed; text-align: center; width: 100%" class="second">
         <img src="/static/back.png" width="50"/>
         <img src="/static/back.png" width="50"/>
         <img src="/static/back.png" width="50"/>

@@ -8,17 +8,24 @@
     <style>
     img.selectedIMG{
     border: 2px solid blue;
+        top: 500px;
     }
     </style>
 </head>
 <body background="static/background.jpg">
 <div id ="div1">
-    <img src="{{url_for('static', filename=image_name)}}"  width="50" onclick="select('card1');" class="card1"/>
-    <img src="{{url_for('static', filename=image_name2)}}"  width="50" onclick="select('card2');" class="card2"/>
-    <img src="{{url_for('static', filename=image_name3)}}"  width="50" onclick="select('card3');" class="card3"/>
-    <img src="{{url_for('static', filename=image_name4)}}"  width="50" onclick="select('card4');" class="card4"/>
-    <img src="{{url_for('static', filename=image_name5)}}"  width="50" onclick="select('card5');" class="card5"/>
-    <img src="{{url_for('static', filename=image_name6)}}"  width="50" onclick="select('card6');" class="card6"/>
+    <img src="{{url_for('static', filename=image_name)}}" onclick="select('card1');" class="card1"
+         style="position: relative; top:0; width:50px"/>
+    <img src="{{url_for('static', filename=image_name2)}}" onclick="select('card2');" class="card2"
+         style="position: relative; top:0; width:50px"/>
+    <img src="{{url_for('static', filename=image_name3)}}" onclick="select('card3');" class="card3"
+         style="position: relative; top:0; width:50px"/>
+    <img src="{{url_for('static', filename=image_name4)}}" onclick="select('card4');" class="card4"
+         style="position: relative; top:0; width:50px"/>
+    <img src="{{url_for('static', filename=image_name5)}}" onclick="select('card5');" class="card5"
+         style="position: relative; top:0; width:50px"/>
+    <img src="{{url_for('static', filename=image_name6)}}" onclick="select('card6');" class="card6"
+         style="position: relative; top:0; width:50px"/>
     <button name = "Submit" type="submit" onclick="submit();">Submit your selected cards!</button>
 </div>
 </body>
